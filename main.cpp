@@ -8,6 +8,7 @@
 #include "Triangle.h"
 #include "Image.h"
 #include "Camera.h"
+#include "CameraSync.h"
 
 #define ESCAPE 27
 #define PAGE_UP 73
@@ -17,11 +18,12 @@
 #define LEFT_ARROW 75
 #define RIGHT_ARROW 77
 
-const float piover180 = 0.0174532925f;
+#define PI_OVER180 = 0.0174532925f;
 
 GLuint texture;
 World world;
 Camera camera;
+CameraSync cs(camera);
 
 GLvoid LoadGLTextures()
 {	
@@ -74,7 +76,7 @@ GLvoid DrawGLScene()
 
     GLfloat xtrans = -camera.xpos;
     GLfloat ztrans = -camera.zpos;
-    GLfloat ytrans = -0.5f;
+    GLfloat ytrans = -camera.ypos;
     sceneroty = 360.0f - camera.rotateX;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -124,33 +126,39 @@ GLvoid DrawGLScene()
     glutSwapBuffers();
 }
 
-void specialKeyPressed(int key, int x, int y)
+void keyPressed(unsigned char key, int x, int y)
 {
     switch (key) {
         case GLUT_KEY_PAGE_UP:
             camera.rotateY -= 0.2f;
+            cs.sendSync(camera);
             break;
 
         case GLUT_KEY_PAGE_DOWN:
             camera.rotateY += 1.0f;
+            cs.sendSync(camera);
             break;
 
         case GLUT_KEY_UP:
-            camera.xpos -= (float)sin(camera.rotateX*piover180) * 0.05f;
-            camera.zpos -= (float)cos(camera.rotateX*piover180) * 0.05f;	
+            camera.xpos -= (float)sin(camera.rotateX*PI_OVER180) * 0.05f;
+            camera.zpos -= (float)cos(camera.rotateX*PI_OVER180) * 0.05f;	
+            cs.sendSync(camera);
             break;
 
         case GLUT_KEY_DOWN:
-            camera.xpos += (float)sin(camera.rotateX*piover180) * 0.05f;
-            camera.zpos += (float)cos(camera.rotateX*piover180) * 0.05f;	
+            camera.xpos += (float)sin(camera.rotateX*PI_OVER180) * 0.05f;
+            camera.zpos += (float)cos(camera.rotateX*PI_OVER180) * 0.05f;	
+            cs.sendSync(camera);
             break;
 
         case GLUT_KEY_LEFT:
             camera.rotateX += 1.5f;
+            cs.sendSync(camera);
             break;
 
         case GLUT_KEY_RIGHT:
             camera.rotateX -= 1.5f;
+            cs.sendSync(camera);
             break;
 
         case ESCAPE:
@@ -158,9 +166,9 @@ void specialKeyPressed(int key, int x, int y)
     }	
 }
 
-inline void keyPressed(unsigned char key, int x, int y)
+inline void specialKeyPressed(int key, int x, int y)
 {
-    specialKeyPressed(key,x,y);
+    keyPressed(key,x,y);
 }
 
 int main(int argc, char **argv)

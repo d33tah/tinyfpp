@@ -6,10 +6,10 @@ CXX = g++
 CXXFLAGS = $(COMPILERFLAGS) $(INCLUDE) -O3
 LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm 
 
-all: clean Image.o World.o main
+all: clean Image.o World.o CameraSync.o main
 
 main : main.cpp
-	$(CXX) $(CXXFLAGS) -o $@ Image.o World.o $(LIBDIR) $< $(LIBRARIES)  
+	$(CXX) $(CXXFLAGS) -o $@ Image.o World.o CameraSync.o $(LIBDIR) $< $(LIBRARIES)  
 
 clean:
 	rm -f *.o main

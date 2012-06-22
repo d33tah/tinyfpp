@@ -13,9 +13,11 @@ class Camera
             camx = 0;
             camy = 0;
             camz = 0;
+            zpos = 0;
+            ypos = 0.5;
         }
 
-        float xpos, zpos;
+        float xpos, zpos, ypos;
         GLfloat rotateX, rotateY, camx, camy, camz;
 
 };
