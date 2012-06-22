@@ -6,9 +6,9 @@
 class World
 {
     public:
-        int numtriangles;
-        Triangle* triangle;
-        void SetupWorld();
+        static int numtriangles;
+        static Triangle* triangle;
+        static void SetupWorld();
 };
 
 #endif

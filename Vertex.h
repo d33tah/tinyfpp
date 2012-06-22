@@ -6,7 +6,6 @@ class Vertex
     public:
         GLfloat x, y, z;
         GLfloat u, v;
-
 };
 
 

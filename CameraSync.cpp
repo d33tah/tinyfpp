@@ -97,6 +97,7 @@ void CameraSync::sendSync(Camera c2)
     send(sock, (void*)&msg, sizeof(S_CameraDefMsg), 0);
 }
 
+
 CameraSync::CameraSync(Camera& camera) : camera(camera)
 {
     struct sockaddr_in conn_params;
