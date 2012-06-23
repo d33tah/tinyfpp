@@ -7,7 +7,10 @@
 using namespace std;
 
 int World::numtriangles;
+int World::max_x;
+int World::max_z;
 vector<Triangle*> World::triangle;
+vector<string> World::lines;
 
 
 /*
@@ -71,6 +74,9 @@ void World::SetupWorld()
         getline(file,line);
         if(file.good())
         {
+            lines.push_back(line);
+            if((int)line.size()>max_z)
+                max_z=line.size();
             for(unsigned int z=0; z<line.size(); z++)
                 if(line[z]=='x')
                 {
@@ -122,5 +128,6 @@ void World::SetupWorld()
             break;
         x++;
     }
+    max_x = x;
 
 }

@@ -2,8 +2,11 @@
 #define __SECTOR_H__
 
 #include <vector>
+#include <string>
 
 #include "Triangle.h"
+
+using namespace std;
 
 class World
 {
@@ -16,8 +19,11 @@ class World
      */
     public:
         static int numtriangles;
-        static std::vector<Triangle*> triangle;
+        static vector<Triangle*> triangle;
         static void SetupWorld();
+        static int max_z;
+        static int max_x;
+        static vector<string> lines;
 };
 
 #endif

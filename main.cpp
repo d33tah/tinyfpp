@@ -10,6 +10,7 @@
 
 #include <iostream>
 
+#include "World.h"
 #include "Engine.h"
 
 #define ESCAPE 27
@@ -20,10 +21,27 @@
 #define LEFT_ARROW 75
 #define RIGHT_ARROW 77
 
+
+bool location_allowed(float x, float z)
+{
+    int box_x = floor(x);
+    int box_z = floor(z);
+    if(box_x>=0 && box_x<=World::max_x && box_z>=0 && box_z<=World::max_z)
+    {
+        if (World::lines[box_x][box_z]=='x')
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 const float PI_OVER180 = 0.0174532925f;
 
 void keyPressed(unsigned char key, int x, int y)
 {
+    float move_x = sin(Engine::camera.rotateX * PI_OVER180 ) * 0.05f;
+    float move_z = cos(Engine::camera.rotateX * PI_OVER180 ) * 0.05f;
     switch (key) {
         case GLUT_KEY_PAGE_UP:
             Engine::camera.rotateY -= 1.0f;
@@ -36,19 +54,24 @@ void keyPressed(unsigned char key, int x, int y)
             break;
 
         case GLUT_KEY_UP:
-            Engine::camera.xpos -= (float)sin(
-                    Engine::camera.rotateX * PI_OVER180 ) * 0.05f;
-            Engine::camera.zpos -= (float)cos(
-                    Engine::camera.rotateX * PI_OVER180 ) * 0.05f;	
-            Engine::cam_sync.sendSync(Engine::camera);
+
+            if(location_allowed(
+                        Engine::camera.xpos-move_x, Engine::camera.zpos-move_z))
+            {
+                Engine::camera.xpos -= move_x;
+                Engine::camera.zpos -= move_z; 
+                Engine::cam_sync.sendSync(Engine::camera);
+            }
             break;
 
         case GLUT_KEY_DOWN:
-            Engine::camera.xpos += (float)sin(
-                    Engine::camera.rotateX * PI_OVER180 ) * 0.05f;
-            Engine::camera.zpos += (float)cos(
-                    Engine::camera.rotateX * PI_OVER180 ) * 0.05f;	
-            Engine::cam_sync.sendSync(Engine::camera);
+            if(location_allowed(
+                        Engine::camera.xpos+move_x, Engine::camera.zpos+move_z))
+            {
+                Engine::camera.xpos += move_x;
+                Engine::camera.zpos += move_z;
+                Engine::cam_sync.sendSync(Engine::camera);
+            }
             break;
 
         case GLUT_KEY_LEFT:
@@ -73,7 +96,6 @@ void keyPressed(unsigned char key, int x, int y)
         case 'q':
             exit(1);                   	
     }	
-    //std::cout << "x=" << Engine::camera.xpos << ",y=" << Engine::camera.zpos << std::endl;
 }
 
 int main(int argc, char **argv)
