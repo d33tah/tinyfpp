@@ -13,6 +13,19 @@
 
 class Engine
 {
+    /*
+     * Engine
+     *
+     * Responsibilities of this class:
+     *
+     * - graphics initialization
+     * - drawing the world
+     * - wrapping up world, camera and camera_sync data.
+     *
+     * In the future, it is planned to split this into Renderer and Engine
+     * or Game and Engine classes.
+     *
+     */
     private:
         static GLuint texture;
         static World world;

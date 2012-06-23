@@ -1,16 +1,24 @@
-#include <cstdio>
-#include "GL/gl.h"
+//#include <cstdio>
+#include <fstream>
+#include <iostream>
+#include <string>
 #include "World.h"
 
+using namespace std;
+
 int World::numtriangles;
-Triangle* World::triangle;
+vector<Triangle*> World::triangle;
 
 
+/*
 void readstr(FILE *f, char *string)
 {
     do {
-        fgets(string, 255, f);
-    } while ((string[0] == '/') || (string[0] == '\n'));
+        if(!feof(f))
+            fgets(string, 255, f);
+        else
+            break;
+    } while ((string[0] == '/') || (string[0] == '\n') );
     return;
 }
 
@@ -21,26 +29,98 @@ void World::SetupWorld()
 
     filein = fopen("Data/world.txt", "rt");
 
-    readstr(filein, oneline);
-    sscanf(oneline, "NUMPOLLIES %d\n", &numtriangles);
-
-    triangle = new Triangle[numtriangles];
-
-    for (int loop = 0; loop < numtriangles; loop++) {
+    numtriangles=0;
+    while(!feof(filein))
+    {
+        Triangle* tmp = new Triangle;
+        triangle.push_back(tmp);
+        bool stop=false;
         for (int vert = 0; vert < 3; vert++) {
             readstr(filein,oneline);
+            if(feof(filein))
+            {
+                stop=true;
+                break;
+            }
 
-            float x, y, z, u, v;
+            float x, y, z, u, 0.0;
             sscanf(oneline, "%f %f %f %f %f", &x, &y, &z, &u, &v);
-            triangle[loop].vertex[vert].x = x;
-            triangle[loop].vertex[vert].y = y;
-            triangle[loop].vertex[vert].z = z;
-            triangle[loop].vertex[vert].u = u;
-            triangle[loop].vertex[vert].v = v;
+            Triangle* tr = triangle[numtriangles];
+            tr->vertex[vert].x = x;
+            tr->vertex[vert].y = 0.0;
+            tr->vertex[vert].z = z;
+            tr->vertex[vert].u = 0.0;
+            tr->vertex[vert].v = 0.0;
         }
+        if(!stop)
+            numtriangles++;
     }
 
     fclose(filein);
     return;
 }
+*/
 
+void World::SetupWorld()
+{
+    ifstream file("Data/maze.txt");
+    string line;
+    int x=0;
+    for(;;)
+    {
+        getline(file,line);
+        if(file.good())
+        {
+            for(unsigned int z=0; z<line.size(); z++)
+                if(line[z]=='x')
+                {
+                    Triangle* tr = new Triangle;
+                    tr->vertex[0].x = x;
+                    tr->vertex[0].y = 0.0;
+                    tr->vertex[0].z = z;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 0.0;
+
+                    tr->vertex[1].x = x+1.0;
+                    tr->vertex[1].y = 0.0;
+                    tr->vertex[1].z = z;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x+1.0;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z+1.0;
+                    tr->vertex[2].u = 0.0;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x;
+                    tr->vertex[0].y = 0.0;
+                    tr->vertex[0].z = z;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 0.0;
+
+                    tr->vertex[1].x = x;
+                    tr->vertex[1].y = 0.0;
+                    tr->vertex[1].z = z+1.0;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x+1.0;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z+1.0;
+                    tr->vertex[2].u = 0.0;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+
+                    numtriangles+=2;
+                }
+        }
+        else
+            break;
+        x++;
+    }
+
+}

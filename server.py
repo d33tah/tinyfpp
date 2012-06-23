@@ -4,6 +4,7 @@ import sys
 import socket
 import threading
 import SocketServer
+import time
 
 HOST = "localhost"
 PORT = 9991
@@ -48,6 +49,7 @@ if __name__ == "__main__":
 
     try:
         while True:
+            time.sleep(0.01)
             pass
     except KeyboardInterrupt:
         server.shutdown()

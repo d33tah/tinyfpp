@@ -1,9 +1,16 @@
+/*
+ * main.cpp
+ *
+ * This file describes the general "gameplay" of the app. At this point,
+ * this involves initialization of the engine and keystroke handling.
+ *
+ */
+
 #include <math.h>
 
-#include "Engine.h"
+#include <iostream>
 
-#include "Camera.h"
-#include "CameraSync.h"
+#include "Engine.h"
 
 #define ESCAPE 27
 #define PAGE_UP 73
@@ -45,18 +52,28 @@ void keyPressed(unsigned char key, int x, int y)
             break;
 
         case GLUT_KEY_LEFT:
-            Engine::camera.rotateX += 1.5f;
+            Engine::camera.rotateX += 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_RIGHT:
-            Engine::camera.rotateX -= 1.5f;
+            Engine::camera.rotateX -= 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
+        case ' ':
+            Engine::camera.ypos += 0.1f;
+            break;
+
+        case 'c':
+            Engine::camera.ypos -= 0.1f;
+            break;
+
         case ESCAPE:
+        case 'q':
             exit(1);                   	
     }	
+    //std::cout << "x=" << Engine::camera.xpos << ",y=" << Engine::camera.zpos << std::endl;
 }
 
 int main(int argc, char **argv)

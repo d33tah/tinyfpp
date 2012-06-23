@@ -1,11 +1,13 @@
-#include "CameraSync.h"
-#include "Camera.h"
-
 #include <sstream>
 #include <iostream>
 #include <stdlib.h>
 #include <fstream>
 #include <utility> //std::pair
+
+#include "CameraSync.h"
+#include "Camera.h"
+
+#include "GL/gl.h"
 
 typedef std::pair<std::string, int> S_HostPortPair;
 S_HostPortPair readServerCfgFile()
@@ -50,7 +52,6 @@ CameraSync::CameraSync(Camera& camera) : camera(camera);
 
 #include <pthread.h>
 
-#include "GL/gl.h"
 
 typedef std::pair<int, Camera*> S_SockCameraPair;
 

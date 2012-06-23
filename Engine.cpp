@@ -99,32 +99,33 @@ void Engine::DrawGLScene()
 
     for (int loop=0; loop<World::numtriangles; loop++)
     {
+        Triangle* tr = World::triangle[loop]; 
         GLfloat x_m, y_m, z_m, u_m, v_m;
 
         glBegin(GL_TRIANGLES);		
         glNormal3f( 0.0f, 0.0f, 1.0f);
 
-        x_m = World::triangle[loop].vertex[0].x;
-        y_m = World::triangle[loop].vertex[0].y;
-        z_m = World::triangle[loop].vertex[0].z;
-        u_m = World::triangle[loop].vertex[0].u;
-        v_m = World::triangle[loop].vertex[0].v;
+        x_m = tr->vertex[0].x;
+        y_m = tr->vertex[0].y;
+        z_m = tr->vertex[0].z;
+        u_m = tr->vertex[0].u;
+        v_m = tr->vertex[0].v;
         glTexCoord2f(u_m,v_m);
         glVertex3f(x_m,y_m,z_m);
 
-        x_m = World::triangle[loop].vertex[1].x;
-        y_m = World::triangle[loop].vertex[1].y;
-        z_m = World::triangle[loop].vertex[1].z;
-        u_m = World::triangle[loop].vertex[1].u;
-        v_m = World::triangle[loop].vertex[1].v;
+        x_m = tr->vertex[1].x;
+        y_m = tr->vertex[1].y;
+        z_m = tr->vertex[1].z;
+        u_m = tr->vertex[1].u;
+        v_m = tr->vertex[1].v;
         glTexCoord2f(u_m,v_m);
         glVertex3f(x_m,y_m,z_m);
 
-        x_m = World::triangle[loop].vertex[2].x;
-        y_m = World::triangle[loop].vertex[2].y;
-        z_m = World::triangle[loop].vertex[2].z;
-        u_m = World::triangle[loop].vertex[2].u;
-        v_m = World::triangle[loop].vertex[2].v;
+        x_m = tr->vertex[2].x;
+        y_m = tr->vertex[2].y;
+        z_m = tr->vertex[2].z;
+        u_m = tr->vertex[2].u;
+        v_m = tr->vertex[2].v;
         glTexCoord2f(u_m,v_m);
         glVertex3f(x_m,y_m,z_m);	
 
