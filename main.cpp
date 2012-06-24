@@ -24,11 +24,19 @@
 
 bool location_allowed(float x, float z)
 {
+    /*
+    cout << "x=" << x <<",z="<<z<<endl;
+    return true;
+    */
     int box_x = floor(x);
     int box_z = floor(z);
     if(box_x>=0 && box_x<=World::max_x && box_z>=0 && box_z<=World::max_z)
     {
         if (World::lines[box_x][box_z]=='x')
+        {
+            return false;
+        }
+        else
         {
             return true;
         }
@@ -40,8 +48,8 @@ const float PI_OVER180 = 0.0174532925f;
 
 void keyPressed(unsigned char key, int x, int y)
 {
-    float move_x = sin(Engine::camera.rotateX * PI_OVER180 ) * 0.05f;
-    float move_z = cos(Engine::camera.rotateX * PI_OVER180 ) * 0.05f;
+    float move_x = sin(Engine::camera.rotateX * PI_OVER180 ) * 0.1f;
+    float move_z = cos(Engine::camera.rotateX * PI_OVER180 ) * 0.1f;
     switch (key) {
         case GLUT_KEY_PAGE_UP:
             Engine::camera.rotateY -= 1.0f;
@@ -56,7 +64,8 @@ void keyPressed(unsigned char key, int x, int y)
         case GLUT_KEY_UP:
 
             if(location_allowed(
-                        Engine::camera.xpos-move_x, Engine::camera.zpos-move_z))
+                        Engine::camera.xpos-(move_x), 
+                        Engine::camera.zpos-(move_z)))
             {
                 Engine::camera.xpos -= move_x;
                 Engine::camera.zpos -= move_z; 
@@ -66,7 +75,8 @@ void keyPressed(unsigned char key, int x, int y)
 
         case GLUT_KEY_DOWN:
             if(location_allowed(
-                        Engine::camera.xpos+move_x, Engine::camera.zpos+move_z))
+                        Engine::camera.xpos+(move_x), 
+                        Engine::camera.zpos+(move_z)))
             {
                 Engine::camera.xpos += move_x;
                 Engine::camera.zpos += move_z;

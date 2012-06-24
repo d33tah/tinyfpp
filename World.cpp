@@ -14,56 +14,57 @@ vector<string> World::lines;
 
 
 /*
-void readstr(FILE *f, char *string)
-{
-    do {
-        if(!feof(f))
-            fgets(string, 255, f);
-        else
-            break;
-    } while ((string[0] == '/') || (string[0] == '\n') );
-    return;
-}
+   void readstr(FILE *f, char *string)
+   {
+   do {
+   if(!feof(f))
+   fgets(string, 255, f);
+   else
+   break;
+   } while ((string[0] == '/') || (string[0] == '\n') );
+   return;
+   }
 
-void World::SetupWorld() 
-{
-    FILE *filein;
-    char oneline[255];
+   void World::SetupWorld() 
+   {
+   FILE *filein;
+   char oneline[255];
 
-    filein = fopen("Data/world.txt", "rt");
+   filein = fopen("Data/world.txt", "rt");
 
-    numtriangles=0;
-    while(!feof(filein))
-    {
-        Triangle* tmp = new Triangle;
-        triangle.push_back(tmp);
-        bool stop=false;
-        for (int vert = 0; vert < 3; vert++) {
-            readstr(filein,oneline);
-            if(feof(filein))
-            {
-                stop=true;
-                break;
-            }
+   numtriangles=0;
+   while(!feof(filein))
+   {
+   Triangle* tmp = new Triangle;
+   triangle.push_back(tmp);
+   bool stop=false;
+   for (int vert = 0; vert < 3; vert++) {
+   readstr(filein,oneline);
+   if(feof(filein))
+   {
+   stop=true;
+   break;
+   }
 
-            float x, y, z, u, 0.0;
-            sscanf(oneline, "%f %f %f %f %f", &x, &y, &z, &u, &v);
-            Triangle* tr = triangle[numtriangles];
-            tr->vertex[vert].x = x;
-            tr->vertex[vert].y = 0.0;
-            tr->vertex[vert].z = z;
-            tr->vertex[vert].u = 0.0;
-            tr->vertex[vert].v = 0.0;
-        }
-        if(!stop)
-            numtriangles++;
-    }
+   float x, y, z, u, v;
+   sscanf(oneline, "%f %f %f %f %f", &x, &y, &z, &u, &v);
+   tr = triangle[numtriangles];
+   tr->vertex[vert].x = x;
+   tr->vertex[vert].y = y;
+   tr->vertex[vert].z = z;
+   tr->vertex[vert].u = u;
+   tr->vertex[vert].v = v;
+   }
+   if(!stop)
+   numtriangles++;
+   }
 
-    fclose(filein);
-    return;
-}
-*/
+   fclose(filein);
+   return;
+   }
+   */
 
+///*
 void World::SetupWorld()
 {
     ifstream file("Data/maze.txt");
@@ -78,8 +79,8 @@ void World::SetupWorld()
             if((int)line.size()>max_z)
                 max_z=line.size();
             for(unsigned int z=0; z<line.size(); z++)
-                if(line[z]=='x')
-                {
+            {
+
                     Triangle* tr = new Triangle;
                     tr->vertex[0].x = x;
                     tr->vertex[0].y = 0.0;
@@ -99,6 +100,7 @@ void World::SetupWorld()
                     tr->vertex[2].u = 0.0;
                     tr->vertex[2].v = 0.0;
                     triangle.push_back(tr);
+                    numtriangles++;
 
 
                     tr = new Triangle;
@@ -120,9 +122,230 @@ void World::SetupWorld()
                     tr->vertex[2].u = 0.0;
                     tr->vertex[2].v = 0.0;
                     triangle.push_back(tr);
+                    numtriangles++;
 
-                    numtriangles+=2;
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 0.0;
+
+                    tr->vertex[1].x = x+1.0;
+                    tr->vertex[1].y = 1.0;
+                    tr->vertex[1].z = z;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x+1.0;
+                    tr->vertex[2].y = 1.0;
+                    tr->vertex[2].z = z+1.0;
+                    tr->vertex[2].u = 0.0;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 0.0;
+
+                    tr->vertex[1].x = x;
+                    tr->vertex[1].y = 1.0;
+                    tr->vertex[1].z = z+1.0;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x+1.0;
+                    tr->vertex[2].y = 1.0;
+                    tr->vertex[2].z = z+1.0;
+                    tr->vertex[2].u = 0.0;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+
+
+                if(line[z]=='x')
+                {
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x+1.0;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x+1.0;
+                    tr->vertex[1].y = 0.0;
+                    tr->vertex[1].z = z;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x+1.0;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x;
+                    tr->vertex[1].y = 1.0;
+                    tr->vertex[1].z = z;
+                    tr->vertex[1].u = 1.5;
+                    tr->vertex[1].v = 1.0;
+
+                    tr->vertex[2].x = x;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+
+                    
+                    tr = new Triangle;
+                    tr->vertex[0].x = x+1.0;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z+1.0;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x+1.0;
+                    tr->vertex[1].y = 0.0;
+                    tr->vertex[1].z = z+1.0;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x+1.0;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x+1.0;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z+1.0;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x+1.0;
+                    tr->vertex[1].y = 1.0;
+                    tr->vertex[1].z = z;
+                    tr->vertex[1].u = 1.5;
+                    tr->vertex[1].v = 1.0;
+
+                    tr->vertex[2].x = x+1.0;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z+1.0;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x;
+                    tr->vertex[1].y = 0.0;
+                    tr->vertex[1].z = z+1.0;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z+1.0;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x;
+                    tr->vertex[1].y = 1.0;
+                    tr->vertex[1].z = z;
+                    tr->vertex[1].u = 1.5;
+                    tr->vertex[1].v = 1.0;
+
+                    tr->vertex[2].x = x;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x+1.0;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z+1.0;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x+1.0;
+                    tr->vertex[1].y = 0.0;
+                    tr->vertex[1].z = z+1.0;
+                    tr->vertex[1].u = 0.0;
+                    tr->vertex[1].v = 0.0;
+
+                    tr->vertex[2].x = x;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z+1.0;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+                    tr = new Triangle;
+                    tr->vertex[0].x = x+1.0;
+                    tr->vertex[0].y = 1.0;
+                    tr->vertex[0].z = z+1.0;
+                    tr->vertex[0].u = 0.0;
+                    tr->vertex[0].v = 1.0;
+
+                    tr->vertex[1].x = x;
+                    tr->vertex[1].y = 1.0;
+                    tr->vertex[1].z = z+1.0;
+                    tr->vertex[1].u = 1.5;
+                    tr->vertex[1].v = 1.0;
+
+                    tr->vertex[2].x = x;
+                    tr->vertex[2].y = 0.0;
+                    tr->vertex[2].z = z+1.0;
+                    tr->vertex[2].u = 1.5;
+                    tr->vertex[2].v = 0.0;
+                    triangle.push_back(tr);
+                    numtriangles++;
+
+
                 }
+            }
         }
         else
             break;
@@ -131,3 +354,5 @@ void World::SetupWorld()
     max_x = x;
 
 }
+//*/
+
