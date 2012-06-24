@@ -1,9 +1,11 @@
-xx         
- xxxx x  
-    x x  
- xxxxxx  
- x  x    
- x  xx   
-         
-         
-         
+xx
+ xxx xxxxxxxxxxxxx x
+   x x           x x
+ xxx xxxxx x xxx x x
+ x   x   x x x x x x
+ xxx x xxx x x xxx x
+ x x x x   x x     x
+ x x x xxx x x xxxxx
+ x x   x x x x   x
+ x xxxxx xxx xxxxxxx
+                   x
