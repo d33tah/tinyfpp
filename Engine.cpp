@@ -137,6 +137,7 @@ void Engine::drawGLScene()
 
     for(unsigned int i = 0; i<objects.size(); i++)
     {
+        int x = objects[i].point.x, y = objects[i].point.y, z = objects[i].point.z;
         vector<Triangle> triangles = objects[i].getTriangles();
         for (unsigned int loop=0; loop<triangles.size(); loop++)
         {
@@ -146,25 +147,25 @@ void Engine::drawGLScene()
             glBegin(GL_TRIANGLES);		
             glNormal3f( 0.0f, 0.0f, 1.0f);
 
-            x_m = tr.vertex[0].x;
-            y_m = tr.vertex[0].y;
-            z_m = tr.vertex[0].z;
+            x_m = tr.vertex[0].x+x;
+            y_m = tr.vertex[0].y+y;
+            z_m = tr.vertex[0].z+z;
             u_m = tr.vertex[0].u;
             v_m = tr.vertex[0].v;
             glTexCoord2f(u_m,v_m);
             glVertex3f(x_m,y_m,z_m);
 
-            x_m = tr.vertex[1].x;
-            y_m = tr.vertex[1].y;
-            z_m = tr.vertex[1].z;
+            x_m = tr.vertex[1].x+x;
+            y_m = tr.vertex[1].y+y;
+            z_m = tr.vertex[1].z+z;
             u_m = tr.vertex[1].u;
             v_m = tr.vertex[1].v;
             glTexCoord2f(u_m,v_m);
             glVertex3f(x_m,y_m,z_m);
 
-            x_m = tr.vertex[2].x;
-            y_m = tr.vertex[2].y;
-            z_m = tr.vertex[2].z;
+            x_m = tr.vertex[2].x+x;
+            y_m = tr.vertex[2].y+y;
+            z_m = tr.vertex[2].z+z;
             u_m = tr.vertex[2].u;
             v_m = tr.vertex[2].v;
             glTexCoord2f(u_m,v_m);
