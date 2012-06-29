@@ -1,4 +1,3 @@
-//#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -12,58 +11,6 @@ int World::max_z;
 vector<Triangle*> World::triangle;
 vector<string> World::lines;
 
-/*
-void readstr(FILE *f, char *string)
-{
-    do {
-        if(!feof(f))
-            fgets(string, 255, f);
-        else
-            break;
-    } while ((string[0] == '/') || (string[0] == '\n') );
-    return;
-}
-
-void World::SetupWorld() 
-{
-    FILE *filein;
-    char oneline[255];
-
-    filein = fopen("Data/world.txt", "rt");
-
-    numtriangles=0;
-    while(!feof(filein))
-    {
-        Triangle* tmp = new Triangle;
-        triangle.push_back(tmp);
-        bool stop=false;
-        for (int vert = 0; vert < 3; vert++) {
-            readstr(filein,oneline);
-            if(feof(filein))
-            {
-                stop=true;
-                break;
-            }
-
-            float x, y, z, u, v;
-            sscanf(oneline, "%f %f %f %f %f", &x, &y, &z, &u, &v);
-            Triangle* tr = triangle[numtriangles];
-            tr->vertex[vert].x = x;
-            tr->vertex[vert].y = y;
-            tr->vertex[vert].z = z;
-            tr->vertex[vert].u = u;
-            tr->vertex[vert].v = v;
-        }
-        if(!stop)
-            numtriangles++;
-    }
-
-    fclose(filein);
-    return;
-}
-*/
-
-///*
 void World::SetupWorld()
 {
     ifstream file("Data/maze.txt");
@@ -353,5 +300,4 @@ void World::SetupWorld()
     max_x = x;
 
 }
-//*/
 
