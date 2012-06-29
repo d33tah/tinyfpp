@@ -27,7 +27,7 @@ static unsigned int getshort(FILE* fp)
     return ((unsigned int) c) + (((unsigned int) c1) << 8);
 }
 
-int Image::FromBMP(std::string filename) 
+int Image::fromBMP(std::string filename) 
 {
     FILE* file = fopen(filename.c_str(), "rb");
     fseek(file, 18, SEEK_CUR);

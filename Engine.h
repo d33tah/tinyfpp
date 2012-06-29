@@ -6,10 +6,9 @@
 #include <GL/glut.h>
 
 #include "World.h"
-#include "Triangle.h"
-#include "Image.h"
 #include "Camera.h"
 #include "CameraSync.h"
+#include "Object.h"
 
 class Engine
 {
@@ -30,12 +29,15 @@ class Engine
         static GLuint texture;
         static World world;
 
-        GLvoid LoadGLTextures();
+        GLvoid loadGLTextures();
         static GLvoid clearScreen(GLsizei width, GLsizei height);
-        GLvoid InitGL(GLsizei width, GLsizei height);
+        GLvoid initGL(GLsizei width, GLsizei height);
 
-        static void ReSizeGLScene(GLsizei width, GLsizei height);
-        static void DrawGLScene();
+        static void resizeGLScene(GLsizei width, GLsizei height);
+        static void drawGLScene();
+
+        static vector<Object> objects;
+        static void loadObjects();
 
     public:
         static void (*fun)(unsigned char,int,int);
@@ -47,5 +49,12 @@ class Engine
         void mainLoop();
 
 };
+
+/*
+GLuint Engine::texture;
+Camera Engine::camera;
+CameraSync Engine::cam_sync(Engine::camera);
+vector<Object> Engine::objects;
+*/
 
 #endif

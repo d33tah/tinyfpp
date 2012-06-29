@@ -13,7 +13,7 @@ class Image
      *
      */
     public:
-        int FromBMP(std::string filename);
+        int fromBMP(std::string filename);
         unsigned long sizeX;
         unsigned long sizeY;
         char *data;

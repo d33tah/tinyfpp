@@ -18,9 +18,8 @@ class World
      *
      */
     public:
-        static int numtriangles;
-        static vector<Triangle*> triangle;
-        static void SetupWorld();
+        static vector<Triangle> triangle;
+        static void setupWorld();
         static int max_z;
         static int max_x;
         static vector<string> lines;

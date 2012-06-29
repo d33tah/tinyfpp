@@ -1,3 +1,5 @@
+//#define MAIN
+
 /*
  * main.cpp
  *
@@ -20,7 +22,6 @@
 #define DOWN_ARROW 80
 #define LEFT_ARROW 75
 #define RIGHT_ARROW 77
-
 
 bool location_allowed(float x, float z)
 {

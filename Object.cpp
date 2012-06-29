@@ -1,6 +1,10 @@
 #include <cstdio>
+#include <iostream>
+#include <stdlib.h>
 
 #include "Object.h"
+
+using namespace std;
 
 void readstr(FILE *f, char *string)
 {
@@ -20,10 +24,15 @@ void Object::loadFile(string modelname)
 
     string filename = "Data/Models/"+modelname+".txt";
     filein = fopen(filename.c_str(), "rt");
+    if(!filein)
+    {
+        cerr << "File " << filename << " does not exist!" << endl;
+        exit(1);
+    }
 
     while(!feof(filein))
     {
-        Triangle* tr = new Triangle;
+        Triangle tr;
         for (int vert = 0; vert < 3; vert++) {
             readstr(filein,oneline);
             if(feof(filein))
@@ -33,11 +42,11 @@ void Object::loadFile(string modelname)
 
             float x, y, z, u, v;
             sscanf(oneline, "%f %f %f %f %f", &x, &y, &z, &u, &v);
-            tr->vertex[vert].x = x;
-            tr->vertex[vert].y = y;
-            tr->vertex[vert].z = z;
-            tr->vertex[vert].u = u;
-            tr->vertex[vert].v = v;
+            tr.vertex[vert].x = x;
+            tr.vertex[vert].y = y;
+            tr.vertex[vert].z = z;
+            tr.vertex[vert].u = u;
+            tr.vertex[vert].v = v;
         }
         triangles.push_back(tr);
     }
@@ -46,7 +55,7 @@ void Object::loadFile(string modelname)
     return;
 }
 
-vector<Triangle*> Object::getTriangles()
+vector<Triangle> Object::getTriangles()
 {
     return triangles;
 }

@@ -11,10 +11,11 @@ using namespace std;
 class Object
 {
     private:
-        vector<Triangle*> triangles;
+        vector<Triangle> triangles;
     public:
+        Vertex point;
         void loadFile(string);
-        vector<Triangle*> getTriangles();
+        vector<Triangle> getTriangles();
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -13,6 +14,7 @@
 GLuint Engine::texture;
 Camera Engine::camera;
 CameraSync Engine::cam_sync(Engine::camera);
+vector<Object> Engine::objects;
 
 void (*Engine::fun)(unsigned char,int,int);
 
@@ -33,17 +35,18 @@ void Engine::bindKeyHandler(void (*_fun)(unsigned char,int,int))
     glutSpecialFunc(&specialKeyPressed);
 }
 
-GLvoid Engine::LoadGLTextures()
+GLvoid Engine::loadGLTextures()
 {	
     Image* image = new Image;
-    image->FromBMP("Data/mud.bmp");
+    image->fromBMP("Data/mud.bmp");
 
     glGenTextures(3, &texture);
 
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, image->sizeX, image->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, image->sizeX, image->sizeY, 0, GL_RGB, 
+            GL_UNSIGNED_BYTE, image->data);
 };
 
 GLvoid Engine::clearScreen(GLsizei width, GLsizei height)
@@ -54,9 +57,9 @@ GLvoid Engine::clearScreen(GLsizei width, GLsizei height)
     glMatrixMode(GL_MODELVIEW);
 }
 
-GLvoid Engine::InitGL(GLsizei width, GLsizei height)
+GLvoid Engine::initGL(GLsizei width, GLsizei height)
 {
-    LoadGLTextures();
+    loadGLTextures();
     glEnable(GL_TEXTURE_2D);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -69,7 +72,7 @@ GLvoid Engine::InitGL(GLsizei width, GLsizei height)
 
 }
 
-void Engine::ReSizeGLScene(GLsizei width, GLsizei height)
+void Engine::resizeGLScene(GLsizei width, GLsizei height)
 {
     if (height==0)
         height=1;
@@ -78,7 +81,7 @@ void Engine::ReSizeGLScene(GLsizei width, GLsizei height)
     clearScreen(width, height);
 }
 
-void Engine::DrawGLScene()
+void Engine::drawGLScene()
 {
     GLfloat sceneroty;
 
@@ -97,47 +100,111 @@ void Engine::DrawGLScene()
 
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    for (int loop=0; loop<World::numtriangles; loop++)
+    for (unsigned int loop=0; loop<World::triangle.size(); loop++)
     {
-        Triangle* tr = World::triangle[loop]; 
+        Triangle tr = World::triangle[loop]; 
         GLfloat x_m, y_m, z_m, u_m, v_m;
 
         glBegin(GL_TRIANGLES);		
         glNormal3f( 0.0f, 0.0f, 1.0f);
 
-        x_m = tr->vertex[0].x;
-        y_m = tr->vertex[0].y;
-        z_m = tr->vertex[0].z;
-        u_m = tr->vertex[0].u;
-        v_m = tr->vertex[0].v;
+        x_m = tr.vertex[0].x;
+        y_m = tr.vertex[0].y;
+        z_m = tr.vertex[0].z;
+        u_m = tr.vertex[0].u;
+        v_m = tr.vertex[0].v;
         glTexCoord2f(u_m,v_m);
         glVertex3f(x_m,y_m,z_m);
 
-        x_m = tr->vertex[1].x;
-        y_m = tr->vertex[1].y;
-        z_m = tr->vertex[1].z;
-        u_m = tr->vertex[1].u;
-        v_m = tr->vertex[1].v;
+        x_m = tr.vertex[1].x;
+        y_m = tr.vertex[1].y;
+        z_m = tr.vertex[1].z;
+        u_m = tr.vertex[1].u;
+        v_m = tr.vertex[1].v;
         glTexCoord2f(u_m,v_m);
         glVertex3f(x_m,y_m,z_m);
 
-        x_m = tr->vertex[2].x;
-        y_m = tr->vertex[2].y;
-        z_m = tr->vertex[2].z;
-        u_m = tr->vertex[2].u;
-        v_m = tr->vertex[2].v;
+        x_m = tr.vertex[2].x;
+        y_m = tr.vertex[2].y;
+        z_m = tr.vertex[2].z;
+        u_m = tr.vertex[2].u;
+        v_m = tr.vertex[2].v;
         glTexCoord2f(u_m,v_m);
         glVertex3f(x_m,y_m,z_m);	
 
         glEnd();	
     }
 
+    for(unsigned int i = 0; i<objects.size(); i++)
+    {
+        vector<Triangle> triangles = objects[i].getTriangles();
+        for (unsigned int loop=0; loop<triangles.size(); loop++)
+        {
+            Triangle tr = triangles[loop]; 
+            GLfloat x_m, y_m, z_m, u_m, v_m;
+
+            glBegin(GL_TRIANGLES);		
+            glNormal3f( 0.0f, 0.0f, 1.0f);
+
+            x_m = tr.vertex[0].x;
+            y_m = tr.vertex[0].y;
+            z_m = tr.vertex[0].z;
+            u_m = tr.vertex[0].u;
+            v_m = tr.vertex[0].v;
+            glTexCoord2f(u_m,v_m);
+            glVertex3f(x_m,y_m,z_m);
+
+            x_m = tr.vertex[1].x;
+            y_m = tr.vertex[1].y;
+            z_m = tr.vertex[1].z;
+            u_m = tr.vertex[1].u;
+            v_m = tr.vertex[1].v;
+            glTexCoord2f(u_m,v_m);
+            glVertex3f(x_m,y_m,z_m);
+
+            x_m = tr.vertex[2].x;
+            y_m = tr.vertex[2].y;
+            z_m = tr.vertex[2].z;
+            u_m = tr.vertex[2].u;
+            v_m = tr.vertex[2].v;
+            glTexCoord2f(u_m,v_m);
+            glVertex3f(x_m,y_m,z_m);	
+
+            glEnd();	
+        }
+
+    }
+
     glutSwapBuffers();
+}
+
+void Engine::loadObjects()
+{
+    ifstream file("Data/objects.txt");
+    for(;;)
+    {
+        string filename;
+        file >> filename;
+        if(!file.good())
+            break;
+
+        Object obj;
+        obj.loadFile(filename);
+
+        Vertex v;
+        file >> v.x;
+        file >> v.y;
+        file >> v.z;
+        obj.point = v;
+
+        objects.push_back(obj);
+    }
 }
 
 Engine::Engine(int x, int y, bool fullscreen)
 {
-    World::SetupWorld();
+    Engine::loadObjects();
+    World::setupWorld();
     int argc = 0;
     char argv = '\0';
     char* c_argv = &argv;
@@ -147,11 +214,11 @@ Engine::Engine(int x, int y, bool fullscreen)
     //glutInitWindowSize(640, 480);
     //glutInitWindowPosition(0, 0);
     glutCreateWindow("Tytul okna");
-    glutDisplayFunc(&Engine::DrawGLScene);
+    glutDisplayFunc(&Engine::drawGLScene);
     if(fullscreen)
         glutFullScreen();
-    glutIdleFunc(&Engine::DrawGLScene);
-    glutReshapeFunc(&Engine::ReSizeGLScene);
-    InitGL(y,x);
+    glutIdleFunc(&Engine::drawGLScene);
+    glutReshapeFunc(&Engine::resizeGLScene);
+    initGL(y,x);
 }
 
