@@ -36,10 +36,10 @@ class Engine
         static void resizeGLScene(GLsizei width, GLsizei height);
         static void drawGLScene();
 
+    public:
         static vector<Object> objects;
         static void loadObjects();
 
-    public:
         static void (*fun)(unsigned char,int,int);
         static CameraSync cam_sync;
         static Camera camera;

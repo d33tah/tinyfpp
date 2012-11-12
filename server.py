@@ -7,7 +7,7 @@ import SocketServer
 import time
 
 HOST = "localhost"
-PORT = 9991
+PORT = 9980
 try:
     PORT = int(sys.argv[1])
 except:

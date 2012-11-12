@@ -16,6 +16,7 @@ class Object
         Vertex point;
         void loadFile(string);
         vector<Triangle> getTriangles();
+        void rotateDegrees(double);
 };
 
 #endif

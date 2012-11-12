@@ -8,6 +8,8 @@
  *
  */
 
+int degrees = 0;
+
 #include <math.h>
 
 #include <iostream>
@@ -25,10 +27,10 @@
 
 bool location_allowed(float x, float z)
 {
-    /*
+    ///*
     cout << "x=" << x <<",z="<<z<<endl;
     return true;
-    */
+    //*/
     int box_x = floor(x);
     int box_z = floor(z);
     if(box_x>=0 && box_x<=World::max_x && box_z>=0 && box_z<=World::max_z)
@@ -86,11 +88,15 @@ void keyPressed(unsigned char key, int x, int y)
             break;
 
         case GLUT_KEY_LEFT:
+            //Engine::objects[0].rotateDegrees(degrees);
+            degrees++;
             Engine::camera.rotateX += 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_RIGHT:
+            //Engine::objects[0].rotateDegrees(degrees);
+            degrees--;
             Engine::camera.rotateX -= 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;

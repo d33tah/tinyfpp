@@ -205,7 +205,7 @@ void Engine::loadObjects()
 Engine::Engine(int x, int y, bool fullscreen)
 {
     Engine::loadObjects();
-    World::setupWorld();
+    //World::setupWorld();
     int argc = 0;
     char argv = '\0';
     char* c_argv = &argv;

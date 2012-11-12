@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <iostream>
 #include <stdlib.h>
-
+#include <math.h>
 #include "Object.h"
 
 using namespace std;
@@ -53,6 +53,23 @@ void Object::loadFile(string modelname)
 
     fclose(filein);
     return;
+}
+
+void Object::rotateDegrees(double degrees)
+{
+    for(vector<Triangle>::iterator it = triangles.begin() ; it!=triangles.end(); ++it)
+    {
+        Triangle tr = *it;
+        for(int i=0; i<3; i++)
+        {
+            Vertex v = tr.vertex[i];
+            double r = sqrt((v.x*v.x)+(v.y*v.y));
+            v.x = r * cos(degrees);
+            v.z = r * sin(degrees);
+            tr.vertex[i] = v;
+        }
+        *it = tr;
+    }
 }
 
 vector<Triangle> Object::getTriangles()
