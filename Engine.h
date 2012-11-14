@@ -37,6 +37,7 @@ class Engine
         static void drawGLScene();
 
     public:
+	static double rot;
         static vector<Object> objects;
         static void loadObjects();
 

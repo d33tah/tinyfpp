@@ -1,1 +1,1 @@
-sphere 0 0 0
+cross 30 0 0

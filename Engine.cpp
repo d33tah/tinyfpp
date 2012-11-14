@@ -10,11 +10,13 @@
 #include "Image.h"
 #include "Camera.h"
 #include "Engine.h"
+#include "Rotate.h"
 
 GLuint Engine::texture;
 Camera Engine::camera;
 CameraSync Engine::cam_sync(Engine::camera);
 vector<Object> Engine::objects;
+double Engine::rot;
 
 void (*Engine::fun)(unsigned char,int,int);
 
@@ -108,6 +110,11 @@ void Engine::drawGLScene()
         glBegin(GL_TRIANGLES);		
         glNormal3f( 0.0f, 0.0f, 1.0f);
 
+   	for(int vv=0; vv<3; vv++)
+		cool_rotate(rot,&(tr.vertex[vv].x),
+				&(tr.vertex[vv].y),
+				&(tr.vertex[vv].z));
+
         x_m = tr.vertex[0].x;
         y_m = tr.vertex[0].y;
         z_m = tr.vertex[0].z;
@@ -146,6 +153,11 @@ void Engine::drawGLScene()
 
             glBegin(GL_TRIANGLES);		
             glNormal3f( 0.0f, 0.0f, 1.0f);
+
+	    for(int vv=0; vv<3; vv++)
+		cool_rotate(rot,&(tr.vertex[vv].x),
+				&(tr.vertex[vv].y),
+				&(tr.vertex[vv].z));
 
             x_m = tr.vertex[0].x+x;
             y_m = tr.vertex[0].y+y;

@@ -5,7 +5,7 @@ COMPILERFLAGS = -Wall
 CXX = g++
 CXXFLAGS = $(COMPILERFLAGS) $(INCLUDE) -ggdb
 LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm 
-OBJS = CameraSync.o Engine.o Image.o Object.o World.o
+OBJS = CameraSync.o Engine.o Image.o Object.o World.o Rotate.o
 
 all: main
 

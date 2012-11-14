@@ -28,7 +28,7 @@ int degrees = 0;
 bool location_allowed(float x, float z)
 {
     ///*
-    cout << "x=" << x <<",z="<<z<<endl;
+    cout << "x=" << x <<",z="<<z<<",rot="<<Engine::rot<<endl;
     return true;
     //*/
     int box_x = floor(x);
@@ -109,6 +109,14 @@ void keyPressed(unsigned char key, int x, int y)
             Engine::camera.ypos -= 0.1f;
             break;
 
+	case 'z':
+		Engine::rot -= 1.0;
+		break;
+
+	case 'x':
+		Engine::rot += 1.0;
+		break;
+
         case ESCAPE:
         case 'q':
             exit(1);                   	
@@ -118,6 +126,7 @@ void keyPressed(unsigned char key, int x, int y)
 int main(int argc, char **argv)
 {
     Engine engine(320,240,false);
+    Engine::rot = 0;
     engine.bindKeyHandler(&keyPressed);
     engine.mainLoop();
     return 0;
