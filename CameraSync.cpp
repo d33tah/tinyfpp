@@ -25,11 +25,11 @@ void die(std::string str)
     exit(1);
 }
 
-#ifdef WIN32
+#ifndef CAMERA_SYNC
 
 //TODO: port to Windows
 void CameraSync::sendSync(Camera c2){}
-CameraSync::CameraSync(Camera& camera) : camera(camera);
+CameraSync::CameraSync(Camera& camera) : camera(camera){};
 
 #else
 
