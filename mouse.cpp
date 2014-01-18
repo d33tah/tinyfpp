@@ -35,31 +35,6 @@ GLfloat camZSpeed = 0.0f;
 
 GLint frameCount = 0; // How many frames have we drawn?
 
-// Location of the sun (i.e. how far deep into the screen is it?)
-GLfloat sunZLocation = -300.0f;
-
-// How many segments make up our sphere around the latutude and longitude of the sphere
-// The higher the number, the closer an approximation to a sphere we get! Try low numbers to see how bad it looks!
-int sphereLatitudalSegments  = 100;
-int sphereLongitudalSegments = 100;
-
-// "Earth" details
-GLbyte earthColour[]       = { 0, 0, 255 };
-GLfloat earthOrbitDistance = 100.0f;
-GLfloat earthOrbitSpeed    = 0.5f;
-GLfloat earthRot           = 0.0f;
-
-// "Moon" details
-GLbyte moonColour[]        = { 255, 0, 0 };
-GLfloat moonOrbitDistance  = 30.0f;
-GLfloat moonOrbitSpeed     = 1.5f;
-GLfloat moonRot            = 0.0f;
-
-// Set the light source location to be the same as the sun position
-// Don't forget that the position is a FOUR COMPONENT VECTOR (with the last component as w) if you omit the last component expect to get NO LIGHT!!!
-// Learnt that one the hard way... =P
-GLfloat  lightPos[] = { 0.0f, 0.0f, -300.0f, 1.0f };
-
 GLfloat movementSpeedFactor = 3.0f;
 
 bool holdingForward     = false;
@@ -82,91 +57,6 @@ void checkGLError(const char * errorLocation)
         exit(1);
     }
 
-}
-
-void initGL()
-{
-    // ----- GLFW Settings -----
-
-    glfwDisable(GLFW_MOUSE_CURSOR); // Hide the mouse cursor
-
-    // ----- Window and Projection Settings -----
-
-    // Set the window title
-    glfwSetWindowTitle("Solar System FPS Controls | r3dux.org");
-
-    // Setup our viewport to be the entire size of the window
-    glViewport(0, 0, (GLsizei)windowWidth, (GLsizei)windowHeight);
-
-    // Change to the projection matrix, reset the matrix and set up our projection
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    // The following code is a fancy bit of math that is eqivilant to calling:
-    // gluPerspective(fieldOfView/2.0f, width/height , near, far);
-    // We do it this way simply to avoid requiring glu.h
-    GLfloat aspectRatio = (windowWidth > windowHeight)? float(windowWidth)/float(windowHeight) : float(windowHeight)/float(windowWidth);
-    GLfloat fH = tan( float(fieldOfView / 360.0f * 3.14159f) ) * near;
-    GLfloat fW = fH * aspectRatio;
-    glFrustum(-fW, fW, -fH, fH, near, far);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    // ----- OpenGL settings -----
-
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set out clear colour to black, full alpha
-
-    glfwSwapInterval(1);        // Lock to vertical sync of monitor (normally 60Hz, so 60fps)
-
-    glShadeModel(GL_SMOOTH);    // Enable (gouraud) shading
-
-    glEnable(GL_DEPTH_TEST);    // Enable depth testing
-
-    glClearDepth(1.0f);         // Clear the entire depth of the depth buffer
-
-    glDepthFunc(GL_LEQUAL);     // Set our depth function to overwrite if new value less than or equal to current value
-
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Ask for nicest perspective correction
-
-    glEnable(GL_CULL_FACE);     // Do not draw polygons facing away from us
-
-    glLineWidth(2.0f);          // Set a 'chunky' line width
-
-    // ---- Set up OpenGL lighting -----
-
-    // Enable lighting
-    glEnable(GL_LIGHTING);
-
-    // Ambient, diffuse and specular lighting values (note that these are ALL FOUR COMPONENT VECTORS!)
-    GLfloat  ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-    GLfloat  diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };
-    GLfloat specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-    GLint specularMagnitude = 64; // Define how "tight" our specular highlights are (larger number = smaller specular highlight). The valid range is is 1 to 128
-
-    // Setup and enable light 0
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);          // Specify the position of the light
-    glLightfv(GL_LIGHT0, GL_AMBIENT,  ambientLight);      // Specify ambient light properties
-    glLightfv(GL_LIGHT0, GL_DIFFUSE,  diffuseLight);      // Specify diffuse light properties
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);     // Specify specular light properties
-    glEnable(GL_LIGHT0);
-
-    // Enable colour tracking of materials
-    glEnable(GL_COLOR_MATERIAL);
-
-    // Define the shininess of the material we'll use to draw things
-    GLfloat materialSpecularReflectance[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-    // Set Material properties to follow glColor values
-    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-
-    // Use our shiny material and magnitude
-    glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecularReflectance);
-    glMateriali(GL_FRONT, GL_SHININESS, specularMagnitude);
-
-    // Check for any OpenGL errors (providing the location we called the function from)
-    checkGLError("InitGL");
 }
 
 // Function to move the camera the amount we've calculated in the calculateCameraMovement function
@@ -334,9 +224,23 @@ void handleKeypress(int theKey, int theAction) {
     }
 }
 
-// Function to draw a grid of lines
-void drawGround()
+
+
+// Function to draw our spheres and position the light source
+void drawScene()
 {
+    // Clear the screen and depth buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Reset the matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    // Move the camera to our location in space
+    glRotatef(camXRot, 1.0f, 0.0f, 0.0f);        // Rotate our camera on the x-axis (looking up and down)
+    glRotatef(camYRot, 0.0f, 1.0f, 0.0f);        // Rotate our camera on the  y-axis (looking left and right)
+    glTranslatef(-camXPos,-camYPos,-camZPos);    // Translate the modelviewm matrix to the position of our camera
+
     GLfloat extent      = 600.0f; // How far on the Z-Axis and X-Axis the ground extends
     GLfloat stepSize    = 20.0f;  // The size of the separation between points
     GLfloat groundLevel = -50.0f;   // Where on the Y-Axis the ground is drawn
@@ -357,49 +261,6 @@ void drawGround()
         glVertex3f(extent,  groundLevel, loop);
     }
     glEnd();
-
-}
-
-// Function to draw our spheres and position the light source
-void drawScene()
-{
-    // Clear the screen and depth buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Reset the matrix
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    // Move the camera to our location in space
-    glRotatef(camXRot, 1.0f, 0.0f, 0.0f);        // Rotate our camera on the x-axis (looking up and down)
-    glRotatef(camYRot, 0.0f, 1.0f, 0.0f);        // Rotate our camera on the  y-axis (looking left and right)
-    glTranslatef(-camXPos,-camYPos,-camZPos);    // Translate the modelviewm matrix to the position of our camera
-
-    // Draw the lower ground-grid
-    drawGround();
-
-    // Draw the upper ground-grid, keeping a copy of our current matrix on the stack before we translate it
-    glPushMatrix();
-
-    glTranslatef(0.0f, 200.0f, 0.0f);
-
-    drawGround();
-
-    glPopMatrix();
-
-    // Move everything "into" the screen (i.e. move 300 units along the Z-axis into the screen) so that all positions are now relative to the location of the sun
-    glTranslatef(0.0f, 0.0f, sunZLocation);
-
-    // Define our light position
-    // *** IMPORTANT! *** A light position takes a FOUR component vector! The last component is w! If you leave off the last component, you get NO LIGHT!!!
-    GLfloat newLightPos[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-
-    glLightfv(GL_LIGHT0, GL_POSITION, newLightPos);  // Place the light where the sun is!
-
-    // Rotate the coordinate system around the y-axis and then translate to shift outwards
-    glRotatef(earthRot, 0.0f, 1.0f, 0.0f);
-    glTranslatef(earthOrbitDistance, 0.0f, 0.0f);
-
 
     glfwSwapBuffers(); // Swap the buffers to display the scene (so we don't have to watch it being drawn!)
 }
@@ -435,9 +296,23 @@ int main(int argc, char **argv)
     }
 
     glfwSetMousePos(midWindowX, midWindowY);
+    glfwDisable(GLFW_MOUSE_CURSOR); // Hide the mouse cursor
 
-    // Call our initGL function to set up our OpenGL options
-    initGL();
+
+    // Change to the projection matrix, reset the matrix and set up our projection
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    // The following code is a fancy bit of math that is eqivilant to calling:
+    // gluPerspective(fieldOfView/2.0f, width/height , near, far);
+    // We do it this way simply to avoid requiring glu.h
+    GLfloat aspectRatio = (windowWidth > windowHeight)? float(windowWidth)/float(windowHeight) : float(windowHeight)/float(windowWidth);
+    GLfloat fH = tan( float(fieldOfView / 360.0f * 3.14159f) ) * near;
+    GLfloat fW = fH * aspectRatio;
+    glFrustum(-fW, fW, -fH, fH, near, far);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
     // Specify the function which should execute when a key is pressed or released
     glfwSetKeyCallback(handleKeypress);
