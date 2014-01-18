@@ -173,56 +173,6 @@ void initGL()
 // Function to move the camera the amount we've calculated in the calculateCameraMovement function
 void moveCamera()
 {
-    camXPos += camXSpeed;
-    camYPos += camYSpeed;
-    camZPos += camZSpeed;
-}
- 
-// Function to deal with mouse position changes, called whenever the mouse cursorm moves
-void handleMouseMove(int mouseX, int mouseY)
-{
-    GLfloat vertMouseSensitivity  = 10.0f;
-    GLfloat horizMouseSensitivity = 10.0f;
- 
-    //cout << "Mouse cursor is at position (" << mouseX << ", " << mouseY << endl;
- 
-    int horizMovement = mouseX - midWindowX;
-    int vertMovement  = mouseY - midWindowY;
- 
-    camXRot += vertMovement / vertMouseSensitivity;
-    camYRot += horizMovement / horizMouseSensitivity;
- 
-    // Control looking up and down with the mouse forward/back movement
-    // Limit loking up to vertically up
-    if (camXRot < -90.0f)
-    {
-        camXRot = -90.0f;
-    }
- 
-    // Limit looking down to vertically down
-    if (camXRot > 90.0f)
-    {
-        camXRot = 90.0f;
-    }
- 
-    // Looking left and right. Keep the angles in the range -180.0f (anticlockwise turn looking behind) to 180.0f (clockwise turn looking behind)
-    if (camYRot < -180.0f)
-    {
-        camYRot += 360.0f;
-    }
- 
-    if (camYRot > 180.0f)
-    {
-        camYRot -= 360.0f;
-    }
- 
-    // Reset the mouse position to the centre of the window each frame
-    glfwSetMousePos(midWindowX, midWindowY);
-}
- 
-// Function to calculate which direction we need to move the camera and by what amount
-void calculateCameraMovement()
-{
     // Break up our movement into components along the X, Y and Z axis
     float camMovementXComponent = 0.0f;
     float camMovementYComponent = 0.0f;
@@ -315,6 +265,52 @@ void calculateCameraMovement()
         //cout << "low capping Z speed to: " << movementSpeedFactor << endl;
         camZSpeed = -movementSpeedFactor;
     }
+
+    camXPos += camXSpeed;
+    camYPos += camYSpeed;
+    camZPos += camZSpeed;
+}
+ 
+// Function to deal with mouse position changes, called whenever the mouse cursorm moves
+void handleMouseMove(int mouseX, int mouseY)
+{
+    GLfloat vertMouseSensitivity  = 10.0f;
+    GLfloat horizMouseSensitivity = 10.0f;
+ 
+    //cout << "Mouse cursor is at position (" << mouseX << ", " << mouseY << endl;
+ 
+    int horizMovement = mouseX - midWindowX;
+    int vertMovement  = mouseY - midWindowY;
+ 
+    camXRot += vertMovement / vertMouseSensitivity;
+    camYRot += horizMovement / horizMouseSensitivity;
+ 
+    // Control looking up and down with the mouse forward/back movement
+    // Limit loking up to vertically up
+    if (camXRot < -90.0f)
+    {
+        camXRot = -90.0f;
+    }
+ 
+    // Limit looking down to vertically down
+    if (camXRot > 90.0f)
+    {
+        camXRot = 90.0f;
+    }
+ 
+    // Looking left and right. Keep the angles in the range -180.0f (anticlockwise turn looking behind) to 180.0f (clockwise turn looking behind)
+    if (camYRot < -180.0f)
+    {
+        camYRot += 360.0f;
+    }
+ 
+    if (camYRot > 180.0f)
+    {
+        camYRot -= 360.0f;
+    }
+ 
+    // Reset the mouse position to the centre of the window each frame
+    glfwSetMousePos(midWindowX, midWindowY);
 }
  
 // Function to set flags according to which keys are pressed or released
@@ -525,13 +521,8 @@ int main(int argc, char **argv)
  
     while (running == true)
     {
-        // Draw our scene
         drawScene();
  
-        // Calculate our camera movement
-        calculateCameraMovement();
- 
-        // Move our camera
         moveCamera();
  
         // Increase our frame counter
