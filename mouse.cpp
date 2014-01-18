@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include <GL/glfw.h>      // Include OpenGL Framework library
-#include <GL/freeglut.h>  // Include FreeGLUT so we can easily draw spheres and calculate our viewing frustrum
 #include <math.h>         // Used only for sin() and cos() functions
+#include <cstdlib>        // exit()
 
 using namespace std;
 
@@ -418,9 +418,6 @@ int main(int argc, char **argv)
 
     // ----- Intialiase FreeGLUT -----
 
-    // Note: We're only using freeGLUT to draw some spheres, so if you modify the code to not include any calls
-    // to glutSolidSphere, then you don't need this, the header or the lib...
-    glutInit(&argc, argv);
 
     // Initialise GLFW
     glfwInit();
