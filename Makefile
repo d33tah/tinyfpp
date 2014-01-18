@@ -1,5 +1,5 @@
 INCLUDE = -I/usr/include/
-LIBDIR  = -L/usr/X11R6/lib 
+LIBDIR  = -L/usr/X11R6/lib
 
 COMPILERFLAGS = -Wall
 CXX = g++
@@ -10,7 +10,7 @@ OBJS = CameraSync.o Engine.o Image.o Object.o World.o Rotate.o
 all: main
 
 main : main.cpp $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(LIBDIR) $< $(LIBRARIES)  
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(LIBDIR) $< $(LIBRARIES)
 
 glfw-legacy/lib/x11/libglfw.a:
 	git clone https://github.com/glfw/glfw-legacy.git
