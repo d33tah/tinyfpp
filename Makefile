@@ -4,7 +4,7 @@ LIBDIR  = -L/usr/X11R6/lib
 COMPILERFLAGS = -Wall
 CXX = g++
 CXXFLAGS = $(COMPILERFLAGS) $(INCLUDE) -ggdb
-LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm 
+LIBRARIES = -lX11 -lXi -lglut -lGL -lGLU -lm
 OBJS = CameraSync.o Engine.o Image.o Object.o World.o Rotate.o
 
 all: main
