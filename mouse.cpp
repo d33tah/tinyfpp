@@ -61,64 +61,29 @@ GLfloat moonRot            = 0.0f;
 // Learnt that one the hard way... =P
 GLfloat  lightPos[] = { 0.0f, 0.0f, -300.0f, 1.0f };
  
-// How fast we move (higher values mean we move and strafe faster)
 GLfloat movementSpeedFactor = 3.0f;
  
-// Hoding any keys down?
 bool holdingForward     = false;
 bool holdingBackward    = false;
 bool holdingLeftStrafe  = false;
 bool holdingRightStrafe = false;
  
-// Function to convert degrees to radians
 float toRads(const float &theAngleInDegrees)
 {
     return theAngleInDegrees * TO_RADS;
 }
  
-// Function to check if OpenGL is having issues - pass it a unique string of some kind to track down where in the code it's moaning
 void checkGLError(const char * errorLocation)
 {
     unsigned int gle = glGetError();
  
     if (gle != GL_NO_ERROR)
     {
-        cout << "GL Error discovered from caller " << errorLocation << ": ";
+        cerr << "GL Error discovered from caller " << errorLocation << ": " << gle << endl;
+        exit(1);
+    }
  
-        switch (gle)
-        {
-        case GL_INVALID_ENUM:
-            cout << "Invalid enum." << endl;
-            break;
- 
-        case GL_INVALID_VALUE:
-            cout << "Invalid value.\n";
-            break;
- 
-        case GL_INVALID_OPERATION:
-            cout << "Invalid Operation.\n";
-            break;
- 
-        case GL_STACK_OVERFLOW:
-            cout << "Stack overflow.\n";
-            break;
- 
-        case GL_STACK_UNDERFLOW:
-            cout << "Stack underflow.\n";
-            break;
- 
-        case GL_OUT_OF_MEMORY:
-            cout << "Out of memory.\n";
-            break;
-        default:
-            cout << "Unknown error! Enum code is: " << gle << endl;
-            break;
- 
-        } // End of switch
- 
-    } // End of if error detected
- 
-} // End of chechGLError function
+}
  
 void initGL()
 {
