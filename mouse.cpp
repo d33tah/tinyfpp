@@ -1,6 +1,6 @@
 #include <iostream>
  
-#include <GLee.h>         // No need to link to GL/gl.h
+#include <GL/GLee.h>         // No need to link to GL/gl.h
 #include <GL/glfw.h>      // Include OpenGL Framework library
 #include <GL/freeglut.h>  // Include FreeGLUT so we can easily draw spheres and calculate our viewing frustrum
 #include <math.h>         // Used only for sin() and cos() functions
