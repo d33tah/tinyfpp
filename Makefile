@@ -7,7 +7,7 @@ CXXFLAGS = $(COMPILERFLAGS) $(INCLUDE) -ggdb
 LIBRARIES = -lX11 -lXi -lglut -lGL -lGLU -lm
 OBJS = CameraSync.o Engine.o Image.o Object.o World.o Rotate.o
 
-all: main
+all: main mouse
 
 main : main.cpp $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(LIBDIR) $< $(LIBRARIES)
