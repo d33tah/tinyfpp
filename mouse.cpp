@@ -430,12 +430,6 @@ void drawScene()
     // Move everything "into" the screen (i.e. move 300 units along the Z-axis into the screen) so that all positions are now relative to the location of the sun
     glTranslatef(0.0f, 0.0f, sunZLocation);
  
-    // Draw the sun (disable lighting so it's always drawn as bright as possible regardless of any lighting going on)
-    glColor3ub(255, 255, 0);
-    glDisable(GL_LIGHTING);
-    glutSolidSphere(15.0f, sphereLatitudalSegments, sphereLongitudalSegments);
-    glEnable(GL_LIGHTING);
- 
     // Define our light position
     // *** IMPORTANT! *** A light position takes a FOUR component vector! The last component is w! If you leave off the last component, you get NO LIGHT!!!
     GLfloat newLightPos[] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -446,33 +440,6 @@ void drawScene()
     glRotatef(earthRot, 0.0f, 1.0f, 0.0f);
     glTranslatef(earthOrbitDistance, 0.0f, 0.0f);
  
-    // Draw the "earth"
-    glColor3ub(earthColour[0], earthColour[1], earthColour[2]);
-    glutSolidSphere(15.0f, sphereLatitudalSegments, sphereLongitudalSegments);
- 
-    // Rotate from earth-based coordinates and translate out again
-    glRotatef(moonRot, 0.0f, 1.0f, 0.0f);
-    glTranslatef(moonOrbitDistance, 0.0f, 0.0f);
- 
-    // Keep the "moon" rotation within a sensible range
-    moonRot += moonOrbitSpeed;
-    if (moonRot > 360.0f)
-    {
-        moonRot -= 360.0f;
-    };
- 
-    // Draw the moon
-    glColor3ub(moonColour[0], moonColour[1], moonColour[2]);
-    glutSolidSphere(6.0f, sphereLatitudalSegments, sphereLongitudalSegments);
- 
-    // Step earth orbit but keep within a sensible range
-    earthRot += earthOrbitSpeed;
-    if (earthRot > 360.0f)
-    {
-        earthRot -= 360.0f;
-    }
- 
-    // ----- Stop Drawing Stuff! ------
  
     glfwSwapBuffers(); // Swap the buffers to display the scene (so we don't have to watch it being drawn!)
 }
