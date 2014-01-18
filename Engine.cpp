@@ -38,7 +38,7 @@ void Engine::bindKeyHandler(void (*_fun)(unsigned char,int,int))
 }
 
 GLvoid Engine::loadGLTextures()
-{	
+{
     Image* image = new Image;
     image->fromBMP("Data/mud.bmp");
 
@@ -47,7 +47,7 @@ GLvoid Engine::loadGLTextures()
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, image->sizeX, image->sizeY, 0, GL_RGB, 
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, image->sizeX, image->sizeY, 0, GL_RGB,
             GL_UNSIGNED_BYTE, image->data);
 };
 
@@ -104,16 +104,16 @@ void Engine::drawGLScene()
 
     for (unsigned int loop=0; loop<World::triangle.size(); loop++)
     {
-        Triangle tr = World::triangle[loop]; 
+        Triangle tr = World::triangle[loop];
         GLfloat x_m, y_m, z_m, u_m, v_m;
 
-        glBegin(GL_TRIANGLES);		
+        glBegin(GL_TRIANGLES);
         glNormal3f( 0.0f, 0.0f, 1.0f);
 
-   	for(int vv=0; vv<3; vv++)
-		cool_rotate(rot,&(tr.vertex[vv].x),
-				&(tr.vertex[vv].y),
-				&(tr.vertex[vv].z));
+       for(int vv=0; vv<3; vv++)
+        cool_rotate(rot,&(tr.vertex[vv].x),
+                &(tr.vertex[vv].y),
+                &(tr.vertex[vv].z));
 
         x_m = tr.vertex[0].x;
         y_m = tr.vertex[0].y;
@@ -137,9 +137,9 @@ void Engine::drawGLScene()
         u_m = tr.vertex[2].u;
         v_m = tr.vertex[2].v;
         glTexCoord2f(u_m,v_m);
-        glVertex3f(x_m,y_m,z_m);	
+        glVertex3f(x_m,y_m,z_m);
 
-        glEnd();	
+        glEnd();
     }
 
     for(unsigned int i = 0; i<objects.size(); i++)
@@ -148,16 +148,16 @@ void Engine::drawGLScene()
         vector<Triangle> triangles = objects[i].getTriangles();
         for (unsigned int loop=0; loop<triangles.size(); loop++)
         {
-            Triangle tr = triangles[loop]; 
+            Triangle tr = triangles[loop];
             GLfloat x_m, y_m, z_m, u_m, v_m;
 
-            glBegin(GL_TRIANGLES);		
+            glBegin(GL_TRIANGLES);
             glNormal3f( 0.0f, 0.0f, 1.0f);
 
-	    for(int vv=0; vv<3; vv++)
-		cool_rotate(rot,&(tr.vertex[vv].x),
-				&(tr.vertex[vv].y),
-				&(tr.vertex[vv].z));
+        for(int vv=0; vv<3; vv++)
+        cool_rotate(rot,&(tr.vertex[vv].x),
+                &(tr.vertex[vv].y),
+                &(tr.vertex[vv].z));
 
             x_m = tr.vertex[0].x+x;
             y_m = tr.vertex[0].y+y;
@@ -181,9 +181,9 @@ void Engine::drawGLScene()
             u_m = tr.vertex[2].u;
             v_m = tr.vertex[2].v;
             glTexCoord2f(u_m,v_m);
-            glVertex3f(x_m,y_m,z_m);	
+            glVertex3f(x_m,y_m,z_m);
 
-            glEnd();	
+            glEnd();
         }
 
     }
@@ -216,8 +216,8 @@ void Engine::loadObjects()
 
 Engine::Engine(int x, int y, bool fullscreen)
 {
-    Engine::loadObjects();
-    //World::setupWorld();
+    //Engine::loadObjects();
+    World::setupWorld();
     int argc = 0;
     char argv = '\0';
     char* c_argv = &argv;

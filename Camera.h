@@ -7,8 +7,8 @@ class Camera
 {
     public:
 
-        Camera() { 
-            rotateY = 0.0; 
+        Camera() {
+            rotateY = 0.0;
             rotateX = 0.0;
             camx = 0;
             camy = 0;

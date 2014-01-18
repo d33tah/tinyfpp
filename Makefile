@@ -18,7 +18,7 @@ glfw-legacy/lib/x11/libglfw.a:
 	make -C glfw-legacy x11 $(MAKEFLAGS)
 
 mouse: mouse.cpp glfw-legacy/lib/x11/libglfw.a
-	g++ -o mouse mouse.cpp -lpthread -I  glfw-legacy/include glfw-legacy/lib/x11/libglfw.a -lX11 -lXrandr -lGL
+	clang -Wall -Wextra -Wunused -o mouse mouse.cpp -lpthread -I  glfw-legacy/include glfw-legacy/lib/x11/libglfw.a -lX11 -lXrandr -lGL -lm -lstdc++
 
 clean:
 	rm -f *.o main mouse

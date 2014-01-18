@@ -6,13 +6,13 @@ static unsigned int getint(FILE* fp)
 {
     int c, c1, c2, c3;
 
-    c = getc(fp);  
-    c1 = getc(fp);  
-    c2 = getc(fp);  
+    c = getc(fp);
+    c1 = getc(fp);
+    c2 = getc(fp);
     c3 = getc(fp);
 
-    return ((unsigned int) c) +   
-        (((unsigned int) c1) << 8) + 
+    return ((unsigned int) c) +
+        (((unsigned int) c1) << 8) +
         (((unsigned int) c2) << 16) +
         (((unsigned int) c3) << 24);
 }
@@ -21,13 +21,13 @@ static unsigned int getshort(FILE* fp)
 {
     int c, c1;
 
-    c = getc(fp);  
+    c = getc(fp);
     c1 = getc(fp);
 
     return ((unsigned int) c) + (((unsigned int) c1) << 8);
 }
 
-int Image::fromBMP(std::string filename) 
+int Image::fromBMP(std::string filename)
 {
     FILE* file = fopen(filename.c_str(), "rb");
     fseek(file, 18, SEEK_CUR);

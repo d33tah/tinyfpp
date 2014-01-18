@@ -9,7 +9,7 @@ class Image
      * Image
      *
      * This class is supposed to load a texture from a graphics file
-     * and store it in a raw format. 
+     * and store it in a raw format.
      *
      */
     public:

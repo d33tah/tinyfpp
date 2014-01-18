@@ -67,18 +67,18 @@ void keyPressed(unsigned char key, int x, int y)
         case GLUT_KEY_UP:
 
             if(location_allowed(
-                        Engine::camera.xpos-(move_x), 
+                        Engine::camera.xpos-(move_x),
                         Engine::camera.zpos-(move_z)))
             {
                 Engine::camera.xpos -= move_x;
-                Engine::camera.zpos -= move_z; 
+                Engine::camera.zpos -= move_z;
                 Engine::cam_sync.sendSync(Engine::camera);
             }
             break;
 
         case GLUT_KEY_DOWN:
             if(location_allowed(
-                        Engine::camera.xpos+(move_x), 
+                        Engine::camera.xpos+(move_x),
                         Engine::camera.zpos+(move_z)))
             {
                 Engine::camera.xpos += move_x;
@@ -109,18 +109,18 @@ void keyPressed(unsigned char key, int x, int y)
             Engine::camera.ypos -= 0.1f;
             break;
 
-	case 'z':
-		Engine::rot -= 1.0;
-		break;
+        case 'z':
+            Engine::rot -= 1.0;
+            break;
 
-	case 'x':
-		Engine::rot += 1.0;
-		break;
+        case 'x':
+            Engine::rot += 1.0;
+            break;
 
         case ESCAPE:
         case 'q':
-            exit(1);                   	
-    }	
+            exit(1);
+    }
 }
 
 int main(int argc, char **argv)

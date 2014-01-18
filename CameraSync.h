@@ -6,7 +6,7 @@
 class CameraSync
 {
     /*
-     * CameraSync is a class used for synchronizing the cameras between 
+     * CameraSync is a class used for synchronizing the cameras between
      * clients. The code is planned to be multiplatform.
      *
      */
