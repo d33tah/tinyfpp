@@ -312,60 +312,25 @@ void handleMouseMove(int mouseX, int mouseY)
     glfwSetMousePos(midWindowX, midWindowY);
 }
 
-// Function to set flags according to which keys are pressed or released
-void handleKeypress(int theKey, int theAction)
-{
-    // If a key is pressed, toggle the relevant key-press flag
-    if (theAction == GLFW_PRESS)
-    {
-
-        switch(theKey)
-        {
-        case 'W':
+void handleKeypress(int theKey, int theAction) {
+    if (theAction == GLFW_PRESS) {
+        if (theKey == 'W')
             holdingForward = true;
-            break;
-
-        case 'S':
+        else if (theKey == 'S')
             holdingBackward = true;
-            break;
-
-        case 'A':
+        else if (theKey == 'A')
             holdingLeftStrafe = true;
-            break;
-
-        case 'D':
+        else if (theKey == 'D')
             holdingRightStrafe = true;
-            break;
-
-        default:
-            // Do nothing...
-            break;
-        }
-    }
-    else // If a key is released, toggle the relevant key-release flag
-    {
-        switch(theKey)
-        {
-        case 'W':
+    } else {
+        if (theKey == 'W')
             holdingForward = false;
-            break;
-
-        case 'S':
+        else if (theKey == 'S')
             holdingBackward = false;
-            break;
-
-        case 'A':
+        else if (theKey == 'A')
             holdingLeftStrafe = false;
-            break;
-
-        case 'D':
+        else if (theKey == 'D')
             holdingRightStrafe = false;
-            break;
-
-        default:
-            // Do nothing...
-            break;
-        }
     }
 }
 
