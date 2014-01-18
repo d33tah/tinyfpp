@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include <GL/GLee.h>         // No need to link to GL/gl.h
 #include <GL/glfw.h>      // Include OpenGL Framework library
 #include <GL/freeglut.h>  // Include FreeGLUT so we can easily draw spheres and calculate our viewing frustrum
 #include <math.h>         // Used only for sin() and cos() functions
@@ -473,41 +472,6 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    // ----- Initialise GLEE -----
-
-    // Initialise GLee once we've got a rendering context
-    // Note: We don't really have to do this because it's called automatically, but if we do it - we KNOW it's been called!
-    GLeeInit();
-
-    // Check for the OpenGL extension which allows us to use vsync
-    if (GLEE_GLX_SGI_swap_control)
-    {
-        cout << "Extension found: GLX_SGI_swap_control (vsync can be used)." << endl;
-        glfwSwapInterval(1);
-    }
-    else
-    {
-        cout << "Extension NOT found: GLX_SGI_swap_control (vsync cannot be used)." << endl;
-        glfwSwapInterval(0);
-    }
-
-    // Check for the OpenGL extension which allows us to use antialiasing
-    if (GLEE_ARB_multitexture)
-    {
-        cout << "Extension found: GLX_ARB_multitexture (anti-aliasing can be used)." << endl;
-
-        // If the extension's available, we likely got anti-aliasing, so disable line smoothing as it comes free with the AA
-        glDisable(GL_LINE_SMOOTH);
-    }
-    else
-    {
-        cout << "Extension NOT found: GLX_ARB_multitexture (anti-aliasing cannot be used)." << endl;
-
-        // If the extention's not available, turn on line smoothing
-        glEnable(GL_LINE_SMOOTH);
-    }
-
-    // Set the mouse cursor to the centre of our window
     glfwSetMousePos(midWindowX, midWindowY);
 
     // Call our initGL function to set up our OpenGL options
