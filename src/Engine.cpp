@@ -74,7 +74,7 @@ void mouseMovement(int mouseX, int mouseY)
 GLvoid Engine::loadGLTextures()
 {
     Image* image = new Image;
-    image->fromBMP("Data/mud.bmp");
+    image->fromBMP("Data/texture.bmp");
 
     glGenTextures(3, &texture);
 
