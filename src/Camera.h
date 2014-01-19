@@ -8,8 +8,8 @@ class Camera
     public:
 
         Camera() {
-            rotateY = 0.0;
-            rotateX = 180.0;
+            rotateX = 0.0;
+            rotateY = 180.0;
             camx = 0;
             camy = 0;
             camz = 0.0;

@@ -46,18 +46,18 @@ const float PI_OVER180 = 0.0174532925f;
 
 void keyPressed(unsigned char key, int x, int y)
 {
-    float pitchFactor = cos(toRads(Engine::camera.rotateY));
-    float move_x = -((movementSpeedFactor * float(sin(toRads(Engine::camera.rotateX)))) * pitchFactor) * 0.1f;
-    float move_z = -((movementSpeedFactor * float(cos(toRads(Engine::camera.rotateX))) * -1.0f) * pitchFactor) * 0.1f;
+    float pitchFactor = cos(toRads(Engine::camera.rotateX));
+    float move_x = -((movementSpeedFactor * float(sin(toRads(Engine::camera.rotateY)))) * pitchFactor) * 0.1f;
+    float move_z = -((movementSpeedFactor * float(cos(toRads(Engine::camera.rotateY))) * -1.0f) * pitchFactor) * 0.1f;
 
     switch (key) {
         case GLUT_KEY_PAGE_UP:
-            Engine::camera.rotateY -= 1.0f;
+            Engine::camera.rotateX -= 1.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_PAGE_DOWN:
-            Engine::camera.rotateY += 1.0f;
+            Engine::camera.rotateX += 1.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
@@ -87,14 +87,14 @@ void keyPressed(unsigned char key, int x, int y)
         case GLUT_KEY_LEFT:
             //Engine::objects[0].rotateDegrees(degrees);
             degrees++;
-            Engine::camera.rotateX -= 3.0f;
+            Engine::camera.rotateY -= 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_RIGHT:
             //Engine::objects[0].rotateDegrees(degrees);
             degrees--;
-            Engine::camera.rotateX += 3.0f;
+            Engine::camera.rotateY += 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 

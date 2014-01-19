@@ -50,23 +50,23 @@ void mouseMovement(int mouseX, int mouseY)
     if (horizMovement == 0 && vertMovement == 0)
         return;
 
-    Engine::camera.rotateY += vertMovement / vertMouseSensitivity;
-    Engine::camera.rotateX += horizMovement / horizMouseSensitivity;
+    Engine::camera.rotateX += vertMovement / vertMouseSensitivity;
+    Engine::camera.rotateY += horizMovement / horizMouseSensitivity;
 
     // Control looking up and down with the mouse forward/back movement
 
     // Looking left and right. Keep the angles in the range -180.0f (anticlockwise turn looking behind) to 180.0f (clockwise turn looking behind)
-    if (Engine::camera.rotateX < -180.0f)
-        Engine::camera.rotateX += 360.0f;
+    if (Engine::camera.rotateY < -180.0f)
+        Engine::camera.rotateY += 360.0f;
 
-    if (Engine::camera.rotateX > 180.0f)
-        Engine::camera.rotateX -= 360.0f;
+    if (Engine::camera.rotateY > 180.0f)
+        Engine::camera.rotateY -= 360.0f;
 
-    if (Engine::camera.rotateY < -90.0f)
-        Engine::camera.rotateY = -90.0f;
+    if (Engine::camera.rotateX < -90.0f)
+        Engine::camera.rotateX = -90.0f;
 
-    if (Engine::camera.rotateY > 90.0f)
-        Engine::camera.rotateY = 90.0f;
+    if (Engine::camera.rotateX > 90.0f)
+        Engine::camera.rotateX = 90.0f;
 
     glutWarpPointer(Engine::windowWidth/2, Engine::windowHeight/2);
 }
@@ -130,12 +130,12 @@ void Engine::drawGLScene()
     GLfloat xtrans = -camera.xpos;
     GLfloat ztrans = -camera.zpos;
     GLfloat ytrans = -camera.ypos;
-    sceneroty = camera.rotateX;
+    sceneroty = camera.rotateY;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    glRotatef(camera.rotateY, 1.0f, 0, 0);
+    glRotatef(camera.rotateX, 1.0f, 0, 0);
     glRotatef(sceneroty, 0, 1.0f, 0);
 
     glTranslatef(xtrans, ytrans, ztrans);
