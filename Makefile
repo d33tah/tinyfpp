@@ -32,4 +32,4 @@ mouse: mouse.cpp glfw-legacy/lib/x11/libglfw.a
 	clang -Wall -Wextra -Wunused -o mouse mouse.cpp -lpthread -I  glfw-legacy/include glfw-legacy/lib/x11/libglfw.a -lX11 -lXrandr -lGL -lm -lstdc++
 
 clean:
-	rm -f $(OBJS) main mouse
+	rm -f $(OBJS) $(UNIX_TARGET) $(WIN32_TARGET) mouse
