@@ -87,14 +87,14 @@ void keyPressed(unsigned char key, int x, int y)
         case GLUT_KEY_LEFT:
             //Engine::objects[0].rotateDegrees(degrees);
             degrees++;
-            Engine::camera.rotateX += 3.0f;
+            Engine::camera.rotateX -= 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_RIGHT:
             //Engine::objects[0].rotateDegrees(degrees);
             degrees--;
-            Engine::camera.rotateX -= 3.0f;
+            Engine::camera.rotateX += 3.0f;
             Engine::cam_sync.sendSync(Engine::camera);
             break;
 
