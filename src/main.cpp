@@ -29,23 +29,12 @@ GLfloat movementSpeedFactor = 3.0f;
 
 bool location_allowed(float x, float z)
 {
-//    ///*
-//    cout << "x=" << x <<",z="<<z<<",rot="<<Engine::rot<<endl;
-//    return true;
-//    //*/
-    int box_x = floor(x);
-    int box_z = floor(z);
-    if(box_x>=0 && box_x<=World::max_x && box_z>=0 && box_z<=World::max_z)
-    {
-        if (World::lines[box_x][box_z]=='x')
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
+    //cout << "x=" << x << ",z=" << z << ",rot=" << Engine::rot << endl;
+    //return true;
+    int box_x = floor(x), box_z = floor(z);
+    if(box_x >= 0 && box_x <= World::max_x &&
+            box_z >= 0 && box_z <= World::max_z)
+        return World::lines[box_x][box_z] != 'x';
     return false;
 }
 
