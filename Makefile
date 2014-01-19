@@ -6,7 +6,7 @@ CXX = g++
 CXXFLAGS = $(COMPILERFLAGS) $(INCLUDE) -ggdb
 LIBRARIES = -lX11 -lXi -lglut -lGL -lGLU -lm
 OBJS = src/CameraSync.o src/Engine.o src/Image.o src/Object.o src/World.o \
-       src/Rotate.o src/main.o
+       src/main.o
 
 all: main mouse
 

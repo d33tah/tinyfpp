@@ -10,7 +10,6 @@
 #include "Image.h"
 #include "Camera.h"
 #include "Engine.h"
-#include "Rotate.h"
 
 GLuint Engine::texture;
 Camera Engine::camera;
@@ -152,9 +151,6 @@ void Engine::drawGLScene()
         glNormal3f( 0.0f, 0.0f, 1.0f);
 
        for(int vv=0; vv<3; vv++)
-        cool_rotate(rot,&(tr.vertex[vv].x),
-                &(tr.vertex[vv].y),
-                &(tr.vertex[vv].z));
 
         x_m = tr.vertex[0].x;
         y_m = tr.vertex[0].y;
@@ -196,9 +192,6 @@ void Engine::drawGLScene()
             glNormal3f( 0.0f, 0.0f, 1.0f);
 
         for(int vv=0; vv<3; vv++)
-        cool_rotate(rot,&(tr.vertex[vv].x),
-                &(tr.vertex[vv].y),
-                &(tr.vertex[vv].z));
 
             x_m = tr.vertex[0].x+x;
             y_m = tr.vertex[0].y+y;
