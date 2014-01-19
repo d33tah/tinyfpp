@@ -286,7 +286,7 @@ Engine::Engine(int x, int y, bool fullscreen)
     glutInitWindowSize(x,y);
     //glutInitWindowSize(640, 480);
     //glutInitWindowPosition(0, 0);
-    glutCreateWindow("Tytul okna");
+    glutCreateWindow("tinyfpp");
     glutDisplayFunc(&Engine::drawGLScene);
     if(fullscreen)
         glutFullScreen();
