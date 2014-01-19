@@ -26,6 +26,7 @@ class Engine
      *
      */
     private:
+
         static GLuint texture;
         static World world;
 
@@ -48,6 +49,9 @@ class Engine
         Engine(int width,int height,bool fullscreen);
         void bindKeyHandler(void (*fun)(unsigned char,int,int));
         void mainLoop();
+
+        static GLint windowWidth;
+        static GLint windowHeight;
 
 };
 

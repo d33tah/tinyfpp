@@ -17,6 +17,8 @@ Camera Engine::camera;
 CameraSync Engine::cam_sync(Engine::camera);
 vector<Object> Engine::objects;
 double Engine::rot;
+GLint Engine::windowWidth = 800;
+GLint Engine::windowHeight = 600;
 
 void (*Engine::fun)(unsigned char,int,int);
 
@@ -35,6 +37,39 @@ void Engine::bindKeyHandler(void (*_fun)(unsigned char,int,int))
     Engine::fun=_fun;
     glutKeyboardFunc(fun);
     glutSpecialFunc(&specialKeyPressed);
+}
+
+void mouseMovement(int mouseX, int mouseY)
+{
+    GLfloat vertMouseSensitivity  = 10.0f;
+    GLfloat horizMouseSensitivity = 10.0f;
+
+    int horizMovement = mouseX - Engine::windowWidth / 2;
+    int vertMovement  = mouseY - Engine::windowHeight / 2;
+
+    //TODO: investigate why the code breaks if I comment out this condition.
+    if (horizMovement == 0 && vertMovement == 0)
+        return;
+
+    Engine::camera.rotateY += vertMovement / vertMouseSensitivity;
+    Engine::camera.rotateX += horizMovement / horizMouseSensitivity;
+
+    // Control looking up and down with the mouse forward/back movement
+
+    // Looking left and right. Keep the angles in the range -180.0f (anticlockwise turn looking behind) to 180.0f (clockwise turn looking behind)
+    if (Engine::camera.rotateX < -180.0f)
+        Engine::camera.rotateX += 360.0f;
+
+    if (Engine::camera.rotateX > 180.0f)
+        Engine::camera.rotateX -= 360.0f;
+
+    if (Engine::camera.rotateY < -90.0f)
+        Engine::camera.rotateY = -90.0f;
+
+    if (Engine::camera.rotateY > 90.0f)
+        Engine::camera.rotateY = 90.0f;
+
+    glutWarpPointer(Engine::windowWidth/2, Engine::windowHeight/2);
 }
 
 GLvoid Engine::loadGLTextures()
@@ -70,6 +105,9 @@ GLvoid Engine::initGL(GLsizei width, GLsizei height)
 
     glEnable(GL_DEPTH_TEST);
     glShadeModel(GL_SMOOTH);
+
+    glutWarpPointer(Engine::windowWidth/2, Engine::windowHeight/2);
+    glutSetCursor (GLUT_CURSOR_NONE);
     clearScreen(width, height);
 
 }
@@ -81,6 +119,9 @@ void Engine::resizeGLScene(GLsizei width, GLsizei height)
 
     glViewport(0, 0, width, height);
     clearScreen(width, height);
+
+    windowHeight = height;
+    windowWidth = width;
 }
 
 void Engine::drawGLScene()
@@ -90,7 +131,7 @@ void Engine::drawGLScene()
     GLfloat xtrans = -camera.xpos;
     GLfloat ztrans = -camera.zpos;
     GLfloat ytrans = -camera.ypos;
-    sceneroty = 360.0f - camera.rotateX;
+    sceneroty = camera.rotateX;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -188,6 +229,7 @@ void Engine::drawGLScene()
 
     }
 
+    glutWarpPointer(Engine::windowWidth/2, Engine::windowHeight/2);
     glutSwapBuffers();
 }
 
@@ -216,6 +258,9 @@ void Engine::loadObjects()
 
 Engine::Engine(int x, int y, bool fullscreen)
 {
+    windowWidth = x;
+    windowHeight = y;
+
     //Engine::loadObjects();
     World::setupWorld();
     int argc = 0;
@@ -232,6 +277,7 @@ Engine::Engine(int x, int y, bool fullscreen)
         glutFullScreen();
     glutIdleFunc(&Engine::drawGLScene);
     glutReshapeFunc(&Engine::resizeGLScene);
+    glutPassiveMotionFunc(mouseMovement);
     initGL(y,x);
 }
 
