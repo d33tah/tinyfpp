@@ -1,6 +1,7 @@
 #include "Image.h"
 
 #include <cstdio>
+#include <cstdlib>
 
 static unsigned int getint(FILE* fp)
 {
@@ -30,6 +31,10 @@ static unsigned int getshort(FILE* fp)
 int Image::fromBMP(std::string filename)
 {
     FILE* file = fopen(filename.c_str(), "rb");
+    if (!file) {
+        fprintf(stderr, "Fatal: could not open %s\n", filename.c_str());
+        exit(1);
+    }
     fseek(file, 18, SEEK_CUR);
 
     this->sizeX = getint (file);

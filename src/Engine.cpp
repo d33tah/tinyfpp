@@ -229,6 +229,10 @@ void Engine::drawGLScene()
 void Engine::loadObjects()
 {
     ifstream file("Data/objects.txt");
+    if (!file) {
+        cerr << "FATAL: Could not open Data/objects.txt." << endl;
+        exit(1);
+    }
     for(;;)
     {
         string filename;

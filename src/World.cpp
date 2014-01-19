@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "World.h"
 
 using namespace std;
@@ -13,6 +14,10 @@ vector<string> World::lines;
 void World::setupWorld()
 {
     ifstream file("Data/maze.txt");
+    if (!file) {
+        cerr << "FATAL: Could not open Data/maze.txt." << endl;
+        exit(1);
+    }
     string line;
     int x=0;
     for(;;)
