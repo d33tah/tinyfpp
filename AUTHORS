@@ -1,12 +1,14 @@
-Parts of the code (major) were taken from this tutorial:
-http://nehe.gamedev.net/tutorial/loading_and_moving_through_a_3d_world/22003/
+Parts of the code (major) were taken from these sources:
 
-Credits:
-Jeff Molofee (nehe@home.com) for writing the tutorials.
-Alfred (alfred@mazuma.net.au) for various fixes and improvements.
-Lakmal Gunasekara (gunasekara@prostep.de) for a Solaris/SPARC
-	and SGI/IRIX port, which has improved the portability
-	of the code base.  Also for tutorial 8, which I only
-	tweaked slightly (basically uncommented what had been
-	commented out for Solaris).
--Richard Campbell.
+ * http://nehe.gamedev.net/tutorial/loading_and_moving_through_a_3d_world/22003/
+
+    Original article credits:
+
+    > Jeff Molofee (nehe@home.com) for writing the tutorials.
+    > Alfred (alfred@mazuma.net.au) for various fixes and improvements.
+    > Lakmal Gunasekara (gunasekara@prostep.de) for a Solaris/SPARC
+    >         and SGI/IRIX port, which has improved the portability
+    >         of the code base.  Also for tutorial 8, which I only
+    >         tweaked slightly (basically uncommented what had been
+    >         commented out for Solaris).
+    > -Richard Campbell.
