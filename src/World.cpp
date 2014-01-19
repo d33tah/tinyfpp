@@ -268,6 +268,6 @@ void World::setupWorld()
             break;
         x++;
     }
-    max_x = x;
+    max_x = x-1;
 }
 
