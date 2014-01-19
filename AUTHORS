@@ -1,3 +1,12 @@
+Project created by Jacek "d33tah" Wielemborek.
+
+Files attached to the Windows build: libglut-0.dll and libgcc_s_sjlj-1.dll are
+not a part of the project, but were added for compatibility purposes only.
+These files belong to freeglut (http://freeglut.sf.net) and GCC
+(http://gcc.gnu.org/) projects, respectively. Both are free software projects;
+see their websites for more information, including licensing, authours and
+source code.
+
 Parts of the code (major) were taken from these sources:
 
  * http://nehe.gamedev.net/tutorial/loading_and_moving_through_a_3d_world/22003/
