@@ -14,7 +14,7 @@ LIBRARIES = -static -lstdc++ -Wl,-Bdynamic -lglut -lglu32 -lopengl32
 TARGET = $(WIN32_TARGET)
 else
 CXX = g++
-LIBRARIES = -lX11 -lXi -lglut -lGL -lGLU -lm
+LIBRARIES = -lX11 -lglut -lGL -lGLU -lm
 TARGET = $(UNIX_TARGET)
 endif
 
