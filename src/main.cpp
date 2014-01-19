@@ -75,8 +75,8 @@ void keyPressed(unsigned char key, int x, int y)
         case GLUT_KEY_UP:
 
             if(location_allowed(
-                        Engine::camera.xpos-(move_x),
-                        Engine::camera.zpos-(move_z)))
+                        Engine::camera.xpos-(3.0*move_x),
+                        Engine::camera.zpos-(3.0*move_z)))
             {
                 Engine::camera.xpos -= move_x;
                 Engine::camera.zpos -= move_z;
@@ -86,8 +86,8 @@ void keyPressed(unsigned char key, int x, int y)
 
         case GLUT_KEY_DOWN:
             if(location_allowed(
-                        Engine::camera.xpos+(move_x),
-                        Engine::camera.zpos+(move_z)))
+                        Engine::camera.xpos+(3.0*move_x),
+                        Engine::camera.zpos+(3.0*move_z)))
             {
                 Engine::camera.xpos += move_x;
                 Engine::camera.zpos += move_z;
