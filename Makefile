@@ -1,5 +1,5 @@
-INCLUDE = -I/usr/include/
-LIBDIR  = -L/usr/X11R6/lib
+INCLUDE =
+LIBDIR  =
 
 COMPILERFLAGS = -Wall
 CXX = g++
