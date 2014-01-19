@@ -25,6 +25,8 @@ int degrees = 0;
 #define LEFT_ARROW 75
 #define RIGHT_ARROW 77
 
+GLfloat movementSpeedFactor = 3.0f;
+
 bool location_allowed(float x, float z)
 {
     ///*
@@ -47,12 +49,18 @@ bool location_allowed(float x, float z)
     return false;
 }
 
+float toRads(const float &theAngleInDegrees) {
+    return theAngleInDegrees * 3.141592654f / 180.0f;
+}
+
 const float PI_OVER180 = 0.0174532925f;
 
 void keyPressed(unsigned char key, int x, int y)
 {
-    float move_x = sin(Engine::camera.rotateX * PI_OVER180 ) * 0.1f;
-    float move_z = cos(Engine::camera.rotateX * PI_OVER180 ) * 0.1f;
+    float pitchFactor = cos(toRads(Engine::camera.rotateY));
+    float move_x = -((movementSpeedFactor * float(sin(toRads(Engine::camera.rotateX)))) * pitchFactor) * 0.1f;
+    float move_z = -((movementSpeedFactor * float(cos(toRads(Engine::camera.rotateX))) * -1.0f) * pitchFactor) * 0.1f;
+
     switch (key) {
         case GLUT_KEY_PAGE_UP:
             Engine::camera.rotateY -= 1.0f;
