@@ -1,18 +1,21 @@
 INCLUDE =
 LIBDIR  =
-
 COMPILERFLAGS = -Wall
-CXX = g++
 CXXFLAGS = $(COMPILERFLAGS) $(INCLUDE) -ggdb
-LIBRARIES = -lX11 -lXi -lglut -lGL -lGLU -lm
 OBJS = src/CameraSync.o src/Engine.o src/Image.o src/Object.o src/World.o \
        src/main.o
-TARGET = main
+
+UNIX_TARGET = main
+WIN32_TARGET = main.exe
 
 ifdef WIN32
 CXX = i686-w64-mingw32-g++
 LIBRARIES = -lglut -lglu32 -lopengl32
-TARGET = main.exe
+TARGET = $(WIN32_TARGET)
+else
+CXX = g++
+LIBRARIES = -lX11 -lXi -lglut -lGL -lGLU -lm
+TARGET = $(UNIX_TARGET)
 endif
 
 all: $(TARGET) mouse
