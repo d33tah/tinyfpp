@@ -10,7 +10,7 @@ WIN32_TARGET = main.exe
 
 ifdef WIN32
 CXX = i686-w64-mingw32-g++
-LIBRARIES = -lglut -lglu32 -lopengl32
+LIBRARIES = -static -lstdc++ -Wl,-Bdynamic -lglut -lglu32 -lopengl32
 TARGET = $(WIN32_TARGET)
 else
 CXX = g++
