@@ -1,5 +1,5 @@
-freeglut v0.1
-=============
+tinyfpp v0.1
+============
 
 This is my experimental FPP maze game. The code is currently quite messy - I
 was learning while implementing things and would write a lot of things
