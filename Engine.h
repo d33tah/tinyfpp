@@ -37,7 +37,7 @@ class Engine
         static void drawGLScene();
 
     public:
-	static double rot;
+        static double rot;
         static vector<Object> objects;
         static void loadObjects();
 
@@ -50,12 +50,5 @@ class Engine
         void mainLoop();
 
 };
-
-/*
-GLuint Engine::texture;
-Camera Engine::camera;
-CameraSync Engine::cam_sync(Engine::camera);
-vector<Object> Engine::objects;
-*/
 
 #endif
