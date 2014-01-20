@@ -11,6 +11,15 @@ Usage
 Provided that you installed the necessary packages, a simple "make" command
 should do. Tested on Fedora 20.
 
+You can generate additional mazes using the following program:
+
+http://thenerdshow.com/c/amaze.tar.gz
+(website can be found here: http://thenerdshow.com/maze.html)
+
+Use it like this:
+
+amaze 30 30 'X' | sed -e 's/ /x/g' -e 's/X/ /g' > Data/maze.txt
+
 Author, license
 ===============
 
