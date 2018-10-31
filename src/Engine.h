@@ -47,7 +47,6 @@ class Engine
         static World world;
 
         GLvoid loadGLTextures();
-        static GLvoid clearScreen(GLsizei width, GLsizei height);
         GLvoid initGL(GLsizei width, GLsizei height);
 
         static void resizeGLScene(GLsizei width, GLsizei height);

@@ -69,42 +69,18 @@ GLvoid Engine::loadGLTextures()
             GL_UNSIGNED_BYTE, image->data);
 };
 
-GLvoid Engine::clearScreen(GLsizei width, GLsizei height)
-{
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
-    glMatrixMode(GL_MODELVIEW);
-}
-
 GLvoid Engine::initGL(GLsizei width, GLsizei height)
 {
     loadGLTextures();
     glEnable(GL_TEXTURE_2D);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClearDepth(1.0);
-    glDepthFunc(GL_LESS);
 
     glEnable(GL_DEPTH_TEST);
-    glShadeModel(GL_SMOOTH);
 
-    glutWarpPointer(Engine::windowWidth/2, Engine::windowHeight/2);
-    glutSetCursor (GLUT_CURSOR_NONE);
-    clearScreen(width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
+    glMatrixMode(GL_MODELVIEW);
 
-}
-
-void Engine::resizeGLScene(GLsizei width, GLsizei height)
-{
-    if (height==0)
-        height=1;
-
-    glViewport(0, 0, width, height);
-    clearScreen(width, height);
-
-    windowHeight = height;
-    windowWidth = width;
 }
 
 void Engine::drawGLScene()
@@ -126,15 +102,12 @@ void Engine::drawGLScene()
 
     glBindTexture(GL_TEXTURE_2D, texture);
 
+    glBegin(GL_TRIANGLES);
+    glNormal3f( 0.0f, 0.0f, 1.0f);
     for (unsigned int loop=0; loop<World::triangle.size(); loop++)
     {
         Triangle tr = World::triangle[loop];
         GLfloat x_m, y_m, z_m, u_m, v_m;
-
-        glBegin(GL_TRIANGLES);
-        glNormal3f( 0.0f, 0.0f, 1.0f);
-
-       for(int vv=0; vv<3; vv++)
 
         x_m = tr.vertex[0].x;
         y_m = tr.vertex[0].y;
@@ -160,8 +133,8 @@ void Engine::drawGLScene()
         glTexCoord2f(u_m,v_m);
         glVertex3f(x_m,y_m,z_m);
 
-        glEnd();
     }
+    glEnd();
 
     for(unsigned int i = 0; i<objects.size(); i++)
     {
@@ -210,39 +183,11 @@ void Engine::drawGLScene()
     glutSwapBuffers();
 }
 
-void Engine::loadObjects()
-{
-    ifstream file("Data/objects.txt");
-    if (!file) {
-        cerr << "FATAL: Could not open Data/objects.txt." << endl;
-        exit(1);
-    }
-    for(;;)
-    {
-        string filename;
-        file >> filename;
-        if(!file.good())
-            break;
-
-        Object obj;
-        obj.loadFile(filename);
-
-        Vertex v;
-        file >> v.x;
-        file >> v.y;
-        file >> v.z;
-        obj.point = v;
-
-        objects.push_back(obj);
-    }
-}
-
 Engine::Engine(int x, int y, bool fullscreen)
 {
     windowWidth = x;
     windowHeight = y;
 
-    //Engine::loadObjects();
     World::setupWorld();
     int argc = 0;
     char argv = '\0';
@@ -257,7 +202,6 @@ Engine::Engine(int x, int y, bool fullscreen)
     if(fullscreen)
         glutFullScreen();
     glutIdleFunc(&Engine::drawGLScene);
-    glutReshapeFunc(&Engine::resizeGLScene);
     initGL(y,x);
 }
 
