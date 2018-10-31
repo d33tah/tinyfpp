@@ -2,7 +2,7 @@ INCLUDE =
 LIBDIR  =
 COMPILERFLAGS = -Wall
 CXXFLAGS = $(COMPILERFLAGS) $(INCLUDE) -s -Os
-OBJS = src/CameraSync.o src/Engine.o src/Image.o src/Object.o src/World.o \
+OBJS = src/Engine.o src/Image.o src/Object.o src/World.o \
        src/main.o
 
 UNIX_TARGET = main

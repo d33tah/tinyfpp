@@ -31,7 +31,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 GLuint Engine::texture;
 Camera Engine::camera;
-CameraSync Engine::cam_sync(Engine::camera);
 vector<Object> Engine::objects;
 double Engine::rot;
 GLint Engine::windowWidth = 800;
@@ -54,39 +53,6 @@ void Engine::bindKeyHandler(void (*_fun)(unsigned char,int,int))
     Engine::fun=_fun;
     glutKeyboardFunc(fun);
     glutSpecialFunc(&specialKeyPressed);
-}
-
-void mouseMovement(int mouseX, int mouseY)
-{
-    GLfloat vertMouseSensitivity  = 10.0f;
-    GLfloat horizMouseSensitivity = 10.0f;
-
-    int horizMovement = mouseX - Engine::windowWidth / 2;
-    int vertMovement  = mouseY - Engine::windowHeight / 2;
-
-    //TODO: investigate why the code breaks if I comment out this condition.
-    if (horizMovement == 0 && vertMovement == 0)
-        return;
-
-    Engine::camera.rotateX += vertMovement / vertMouseSensitivity;
-    Engine::camera.rotateY += horizMovement / horizMouseSensitivity;
-
-    // Control looking up and down with the mouse forward/back movement
-
-    // Looking left and right. Keep the angles in the range -180.0f (anticlockwise turn looking behind) to 180.0f (clockwise turn looking behind)
-    if (Engine::camera.rotateY < -180.0f)
-        Engine::camera.rotateY += 360.0f;
-
-    if (Engine::camera.rotateY > 180.0f)
-        Engine::camera.rotateY -= 360.0f;
-
-    if (Engine::camera.rotateX < -90.0f)
-        Engine::camera.rotateX = -90.0f;
-
-    if (Engine::camera.rotateX > 90.0f)
-        Engine::camera.rotateX = 90.0f;
-
-    glutWarpPointer(Engine::windowWidth/2, Engine::windowHeight/2);
 }
 
 GLvoid Engine::loadGLTextures()
@@ -292,7 +258,6 @@ Engine::Engine(int x, int y, bool fullscreen)
         glutFullScreen();
     glutIdleFunc(&Engine::drawGLScene);
     glutReshapeFunc(&Engine::resizeGLScene);
-    glutPassiveMotionFunc(mouseMovement);
     initGL(y,x);
 }
 

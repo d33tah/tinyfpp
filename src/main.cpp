@@ -71,12 +71,10 @@ void keyPressed(unsigned char key, int x, int y)
     switch (key) {
         case GLUT_KEY_PAGE_UP:
             Engine::camera.rotateX -= 1.0f;
-            Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_PAGE_DOWN:
             Engine::camera.rotateX += 1.0f;
-            Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_UP:
@@ -87,7 +85,6 @@ void keyPressed(unsigned char key, int x, int y)
             {
                 Engine::camera.xpos -= move_x;
                 Engine::camera.zpos -= move_z;
-                Engine::cam_sync.sendSync(Engine::camera);
             }
             break;
 
@@ -98,7 +95,6 @@ void keyPressed(unsigned char key, int x, int y)
             {
                 Engine::camera.xpos += move_x;
                 Engine::camera.zpos += move_z;
-                Engine::cam_sync.sendSync(Engine::camera);
             }
             break;
 
@@ -106,14 +102,12 @@ void keyPressed(unsigned char key, int x, int y)
             //Engine::objects[0].rotateDegrees(degrees);
             degrees++;
             Engine::camera.rotateY -= 3.0f;
-            Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case GLUT_KEY_RIGHT:
             //Engine::objects[0].rotateDegrees(degrees);
             degrees--;
             Engine::camera.rotateY += 3.0f;
-            Engine::cam_sync.sendSync(Engine::camera);
             break;
 
         case ' ':
